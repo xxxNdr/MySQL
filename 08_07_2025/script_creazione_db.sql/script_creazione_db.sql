@@ -1,0 +1,1536 @@
+DROP DATABASE IF EXISTS cantine;
+CREATE DATABASE cantine;
+
+USE cantine;
+
+
+CREATE TABLE cliente(
+	piva CHAR(11) NOT NULL PRIMARY KEY,
+	nominativo VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE cantina(
+idc INT PRIMARY KEY,
+nome VARCHAR(255),
+provincia VARCHAR(255)
+);
+
+
+CREATE TABLE vino(
+idv INT PRIMARY KEY,
+nome VARCHAR(255),
+tipo VARCHAR(255)
+);
+
+
+CREATE TABLE produzione(
+idc INT NOT NULL,
+idv INT NOT NULL,
+anno INT NOT NULL,
+bottiglie INT NOT NULL,
+FOREIGN KEY (idc)  REFERENCES cantina (idc) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (idv) REFERENCES vino(idv) ON DELETE CASCADE ON UPDATE CASCADE,
+PRIMARY KEY (idc, idv, anno)
+);
+
+CREATE TABLE vendita(
+	id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	idc INT NOT NULL,
+	idv INT NOT NULL,
+	anno INT NOT NULL,
+	bottiglie INT NOT NULL,
+	datav DATE NOT NULL,
+	piva CHAR(11) NOT NULL,
+	FOREIGN KEY (piva) REFERENCES cliente(piva),
+	FOREIGN KEY (idc, idv, anno) REFERENCES produzione(idc, idv, anno)
+);
+
+
+INSERT INTO cantina VALUES(1, 'Azienda Agricola Ferrari', 'Modena');
+INSERT INTO cantina VALUES(2, 'Azienda Agricola Rossi', 'Modena');
+INSERT INTO cantina VALUES(3, 'Azienda Agricola Fabri', 'Forlì-Cesena');
+INSERT INTO cantina VALUES(4, 'Azienda Agricola Montanari', 'Forlì-Cesena');
+INSERT INTO cantina VALUES(5, 'Azienda Agricola Barbieri', 'Bologna');
+INSERT INTO cantina VALUES(6, 'Azienda Agricola Magnani', 'Parma');
+
+
+INSERT INTO vino VALUES(1, 'Barbera Colli Imola', 'Rosso');
+INSERT INTO vino VALUES(2, 'Barbera Colli Bolognesi', 'Rosso');
+INSERT INTO vino VALUES(3, 'Barbera Serravalle', 'Rosso');
+INSERT INTO vino VALUES(4, 'Barbera Riserva Montebudello', 'Rosso');
+INSERT INTO vino VALUES(5, 'Cabernet Sauvignon Colli', 'Rosso');
+INSERT INTO vino VALUES(6, 'Cabernet Sauvignon Riserva', 'Rosso');
+INSERT INTO vino VALUES(7, 'Merlot DOC', 'Rosso');
+INSERT INTO vino VALUES(8, 'Sauvignon Bosco Eliceo', 'Rosso');
+INSERT INTO vino VALUES(9, 'Fortana Bosco Eliceo', 'Rosso');
+INSERT INTO vino VALUES(10, 'Merlot Bosco Eliceo', 'Rosso');
+INSERT INTO vino VALUES(11, 'Cagnina Romagna', 'Rosso');
+INSERT INTO vino VALUES(12, 'Sangiovese Faenza', 'Rosso');
+INSERT INTO vino VALUES(13, 'Sangiovese', 'Rosso');
+INSERT INTO vino VALUES(14, 'Pinot Nero DOC', 'Rosso');
+INSERT INTO vino VALUES(15, 'Merlot Colli di Parma', 'Rosso');
+INSERT INTO vino VALUES(16, 'Cabernet Franc Parma', 'Rosso');
+INSERT INTO vino VALUES(17, 'Cabernet Sauvignon Parma', 'Rosso');
+INSERT INTO vino VALUES(18, 'Barbera', 'Rosso');
+INSERT INTO vino VALUES(19, 'Bonarda', 'Rosso');
+INSERT INTO vino VALUES(20, 'Lambrusco Parma', 'Rosso');
+INSERT INTO vino VALUES(21, 'Lambrusco Grasparossa', 'Rosso');
+INSERT INTO vino VALUES(22, 'Lambrusco Montericco', 'Rosso');
+INSERT INTO vino VALUES(23, 'Malbo Gentile', 'Rosso');
+INSERT INTO vino VALUES(24, 'Marzemino', 'Rosso');
+INSERT INTO vino VALUES(25, 'Gutturnio', 'Rosso');
+INSERT INTO vino VALUES(26, 'Gutturnio Superiore', 'Rosso');
+INSERT INTO vino VALUES(27, 'Gutturnio Riserva', 'Rosso');
+INSERT INTO vino VALUES(28, 'Novello', 'Rosso');
+INSERT INTO vino VALUES(29, 'Bonarda Colli Piacentini', 'Rosso');
+INSERT INTO vino VALUES(30, 'Lambrusco di Sorbara', 'Rosso');
+INSERT INTO vino VALUES(31, 'Lambrusco Castelvetro', 'Rosso');
+INSERT INTO vino VALUES(32, 'Sangiovese di Romagna', 'Rosso');
+INSERT INTO vino VALUES(33, 'Lambrusco Salamino', 'Rosso');
+INSERT INTO vino VALUES(34, 'Chardonnay Colli di Parma', 'Bianco');
+INSERT INTO vino VALUES(35, 'Chardonnay Colli Bolognesi', 'Bianco');
+INSERT INTO vino VALUES(36, 'Malvasia di Scandiano', 'Bianco');
+INSERT INTO vino VALUES(37, 'Malvasia Colli di Parma', 'Bianco');
+INSERT INTO vino VALUES(38, 'Monterosso Val d''Arda', 'Bianco');
+INSERT INTO vino VALUES(39, 'Pagadebit di Romagna', 'Bianco');
+INSERT INTO vino VALUES(40, 'Pignoletto Classico', 'Bianco');
+INSERT INTO vino VALUES(41, 'Pignoletto Passito', 'Bianco');
+INSERT INTO vino VALUES(42, 'Pignoletto Superiore', 'Bianco');
+INSERT INTO vino VALUES(43, 'Pignoletto', 'Bianco');
+INSERT INTO vino VALUES(44, 'Pinot Bianco Colli Parma', 'Bianco');
+INSERT INTO vino VALUES(45, 'Pinot Colli Bolognesi', 'Bianco');
+INSERT INTO vino VALUES(46, 'Pinot Grigio', 'Bianco');
+INSERT INTO vino VALUES(47, 'Rébola', 'Bianco');
+INSERT INTO vino VALUES(48, 'Riesling Italico', 'Bianco');
+INSERT INTO vino VALUES(49, 'Sauvignon Colli Bolognesi', 'Bianco');
+INSERT INTO vino VALUES(50, 'Sauvignon Terre Montebudello', 'Bianco');
+INSERT INTO vino VALUES(51, 'Sauvignon Superiore', 'Bianco');
+INSERT INTO vino VALUES(52, 'Sauvignon Colli Parma', 'Bianco');
+INSERT INTO vino VALUES(53, 'Trebbianino Val Trebbia', 'Bianco');
+INSERT INTO vino VALUES(54, 'Trebbiano di Romagna', 'Bianco');
+INSERT INTO vino VALUES(55, 'Valnure Colli Piacentini', 'Bianco');
+INSERT INTO vino VALUES(56, 'Vin Santo', 'Bianco');
+INSERT INTO vino VALUES(57, 'Vin Santo di Vileno', 'Bianco');
+
+INSERT INTO produzione VALUES(1,42	, 2009, 58300);
+INSERT INTO produzione VALUES(1,42	, 2012, 70300);
+INSERT INTO produzione VALUES(1,42	, 2014, 130200);
+ 
+INSERT INTO produzione VALUES(1,12	, 2011, 71200);
+INSERT INTO produzione VALUES(1,12	, 2012, 162400);
+INSERT INTO produzione VALUES(1,12	, 2013, 103800);
+ 
+INSERT INTO produzione VALUES(1,5	, 2014, 146600);
+INSERT INTO produzione VALUES(1,5	, 2011, 79500);
+INSERT INTO produzione VALUES(1,5	, 2009, 200000);
+ 
+INSERT INTO produzione VALUES(1,43	, 2010, 175400);
+INSERT INTO produzione VALUES(1,43	, 2013, 49300);
+INSERT INTO produzione VALUES(1,43	, 2014, 178000);
+ 
+INSERT INTO produzione VALUES(1,33	, 2013, 121900);
+INSERT INTO produzione VALUES(1,33	, 2010, 59900);
+INSERT INTO produzione VALUES(1,33	, 2012, 100800);
+ 
+INSERT INTO produzione VALUES(1,28	, 2010, 45200);
+INSERT INTO produzione VALUES(1,28	, 2009, 132100);
+INSERT INTO produzione VALUES(1,28	, 2011, 44800);
+ 
+INSERT INTO produzione VALUES(1,53	, 2009, 100400);
+INSERT INTO produzione VALUES(1,53	, 2010, 65700);
+INSERT INTO produzione VALUES(1,53	, 2011, 8100);
+ 
+INSERT INTO produzione VALUES(1,19	, 2011, 78800);
+INSERT INTO produzione VALUES(1,19	, 2014, 116100);
+INSERT INTO produzione VALUES(1,19	, 2010, 142900);
+ 
+INSERT INTO produzione VALUES(1,37	, 2012, 149400);
+INSERT INTO produzione VALUES(1,37	, 2013, 136100);
+INSERT INTO produzione VALUES(1,37	, 2014, 42000);
+ 
+INSERT INTO produzione VALUES(1,11	, 2010, 116800);
+INSERT INTO produzione VALUES(1,11	, 2011, 107600);
+INSERT INTO produzione VALUES(1,11	, 2012, 169600);
+ 
+INSERT INTO produzione VALUES(2,15	, 2012, 175700);
+INSERT INTO produzione VALUES(2,15	, 2014, 126400);
+INSERT INTO produzione VALUES(2,15	, 2013, 184400);
+ 
+INSERT INTO produzione VALUES(2,54	, 2012, 105200);
+INSERT INTO produzione VALUES(2,54	, 2010, 8100);
+INSERT INTO produzione VALUES(2,54	, 2011, 164800);
+ 
+INSERT INTO produzione VALUES(2,13	, 2013, 26000);
+INSERT INTO produzione VALUES(2,13	, 2009, 136700);
+INSERT INTO produzione VALUES(2,13	, 2012, 16100);
+ 
+INSERT INTO produzione VALUES(2,31	, 2014, 102200);
+INSERT INTO produzione VALUES(2,31	, 2013, 171900);
+INSERT INTO produzione VALUES(2,31	, 2010, 86600);
+ 
+INSERT INTO produzione VALUES(2,18	, 2010, 26100);
+INSERT INTO produzione VALUES(2,18	, 2011, 135300);
+INSERT INTO produzione VALUES(2,18	, 2014, 7600);
+ 
+INSERT INTO produzione VALUES(2,47	, 2012, 162500);
+INSERT INTO produzione VALUES(2,47	, 2011, 143500);
+INSERT INTO produzione VALUES(2,47	, 2009, 123900);
+ 
+INSERT INTO produzione VALUES(2,56	, 2009, 97900);
+INSERT INTO produzione VALUES(2,56	, 2013, 123100);
+INSERT INTO produzione VALUES(2,56	, 2012, 165500);
+ 
+INSERT INTO produzione VALUES(2,38	, 2011, 89200);
+INSERT INTO produzione VALUES(2,38	, 2014, 71400);
+INSERT INTO produzione VALUES(2,38	, 2010, 116400);
+ 
+INSERT INTO produzione VALUES(2,12	, 2013, 63500);
+INSERT INTO produzione VALUES(2,12	, 2010, 82500);
+INSERT INTO produzione VALUES(2,12	, 2011, 119300);
+ 
+INSERT INTO produzione VALUES(2,10	, 2009, 182500);
+INSERT INTO produzione VALUES(2,10	, 2010, 78300);
+INSERT INTO produzione VALUES(2,10	, 2011, 56900);
+ 
+INSERT INTO produzione VALUES(2,34	, 2014, 86200);
+INSERT INTO produzione VALUES(2,34	, 2012, 143500);
+INSERT INTO produzione VALUES(2,34	, 2013, 60700);
+ 
+INSERT INTO produzione VALUES(2,37	, 2010, 38600);
+INSERT INTO produzione VALUES(2,37	, 2011, 161600);
+INSERT INTO produzione VALUES(2,37	, 2013, 70800);
+ 
+INSERT INTO produzione VALUES(2,39	, 2012, 72400);
+INSERT INTO produzione VALUES(2,39	, 2011, 170400);
+INSERT INTO produzione VALUES(2,39	, 2014, 134300);
+ 
+INSERT INTO produzione VALUES(2,8	, 2010, 131400);
+INSERT INTO produzione VALUES(2,8	, 2013, 14800);
+INSERT INTO produzione VALUES(2,8	, 2011, 91700);
+ 
+INSERT INTO produzione VALUES(2,28	, 2014, 126600);
+INSERT INTO produzione VALUES(2,28	, 2009, 94700);
+INSERT INTO produzione VALUES(2,28	, 2011, 109800);
+ 
+INSERT INTO produzione VALUES(2,41	, 2009, 23400);
+INSERT INTO produzione VALUES(2,41	, 2011, 30200);
+INSERT INTO produzione VALUES(2,41	, 2013, 42600);
+ 
+INSERT INTO produzione VALUES(2,49	, 2012, 194600);
+INSERT INTO produzione VALUES(2,49	, 2011, 142200);
+INSERT INTO produzione VALUES(2,49	, 2010, 64400);
+ 
+INSERT INTO produzione VALUES(2,16	, 2011, 153100);
+INSERT INTO produzione VALUES(2,16	, 2013, 64700);
+INSERT INTO produzione VALUES(2,16	, 2014, 32800);
+ 
+INSERT INTO produzione VALUES(2,26	, 2012, 107100);
+INSERT INTO produzione VALUES(2,26	, 2011, 137400);
+INSERT INTO produzione VALUES(2,26	, 2010, 102900);
+ 
+INSERT INTO produzione VALUES(2,23	, 2013, 193000);
+INSERT INTO produzione VALUES(2,23	, 2014, 83100);
+INSERT INTO produzione VALUES(2,23	, 2009, 130400);
+ 
+INSERT INTO produzione VALUES(3,35	, 2011, 112000);
+INSERT INTO produzione VALUES(3,35	, 2012, 95800);
+INSERT INTO produzione VALUES(3,35	, 2013, 71900);
+ 
+INSERT INTO produzione VALUES(3,30	, 2012, 33900);
+INSERT INTO produzione VALUES(3,30	, 2011, 86000);
+INSERT INTO produzione VALUES(3,30	, 2010, 47000);
+ 
+INSERT INTO produzione VALUES(3,36	, 2011, 88000);
+INSERT INTO produzione VALUES(3,36	, 2014, 26700);
+INSERT INTO produzione VALUES(3,36	, 2013, 177200);
+ 
+INSERT INTO produzione VALUES(3,10	, 2012, 160100);
+INSERT INTO produzione VALUES(3,10	, 2010, 113100);
+INSERT INTO produzione VALUES(3,10	, 2009, 43000);
+ 
+INSERT INTO produzione VALUES(3,34	, 2012, 172800);
+INSERT INTO produzione VALUES(3,34	, 2011, 88600);
+INSERT INTO produzione VALUES(3,34	, 2010, 61000);
+ 
+INSERT INTO produzione VALUES(4,26	, 2014, 125600);
+INSERT INTO produzione VALUES(4,26	, 2010, 66500);
+INSERT INTO produzione VALUES(4,26	, 2013, 12500);
+ 
+INSERT INTO produzione VALUES(4,34	, 2009, 133200);
+INSERT INTO produzione VALUES(4,34	, 2010, 79400);
+INSERT INTO produzione VALUES(4,34	, 2011, 190800);
+ 
+INSERT INTO produzione VALUES(4,7	, 2009, 191000);
+INSERT INTO produzione VALUES(4,7	, 2014, 144100);
+INSERT INTO produzione VALUES(4,7	, 2012, 62000);
+ 
+INSERT INTO produzione VALUES(4,47	, 2012, 109900);
+INSERT INTO produzione VALUES(4,47	, 2014, 78600);
+INSERT INTO produzione VALUES(4,47	, 2013, 68500);
+ 
+INSERT INTO produzione VALUES(4,5	, 2009, 88200);
+INSERT INTO produzione VALUES(4,5	, 2011, 34900);
+INSERT INTO produzione VALUES(4,5	, 2014, 130200);
+ 
+INSERT INTO produzione VALUES(4,53	, 2012, 93200);
+INSERT INTO produzione VALUES(4,53	, 2014, 136900);
+INSERT INTO produzione VALUES(4,53	, 2010, 113500);
+ 
+INSERT INTO produzione VALUES(4,49	, 2011, 186200);
+INSERT INTO produzione VALUES(4,49	, 2012, 69400);
+INSERT INTO produzione VALUES(4,49	, 2009, 76400);
+ 
+INSERT INTO produzione VALUES(4,25	, 2013, 51200);
+INSERT INTO produzione VALUES(4,25	, 2014, 93400);
+INSERT INTO produzione VALUES(4,25	, 2009, 107200);
+ 
+INSERT INTO produzione VALUES(4,27	, 2010, 159900);
+INSERT INTO produzione VALUES(4,27	, 2009, 18800);
+INSERT INTO produzione VALUES(4,27	, 2012, 125200);
+ 
+INSERT INTO produzione VALUES(4,11	, 2014, 134400);
+INSERT INTO produzione VALUES(4,11	, 2013, 198000);
+INSERT INTO produzione VALUES(4,11	, 2010, 127200);
+ 
+INSERT INTO produzione VALUES(4,31	, 2009, 67400);
+INSERT INTO produzione VALUES(4,31	, 2012, 59200);
+INSERT INTO produzione VALUES(4,31	, 2014, 172900);
+ 
+INSERT INTO produzione VALUES(4,52	, 2011, 78900);
+INSERT INTO produzione VALUES(4,52	, 2014, 75400);
+INSERT INTO produzione VALUES(4,52	, 2010, 64300);
+ 
+INSERT INTO produzione VALUES(4,12	, 2009, 168900);
+INSERT INTO produzione VALUES(4,12	, 2010, 143300);
+INSERT INTO produzione VALUES(4,12	, 2013, 117700);
+ 
+INSERT INTO produzione VALUES(5,6	, 2014, 45300);
+INSERT INTO produzione VALUES(5,6	, 2012, 20300);
+INSERT INTO produzione VALUES(5,6	, 2009, 188100);
+ 
+INSERT INTO produzione VALUES(5,53	, 2011, 25100);
+INSERT INTO produzione VALUES(5,53	, 2013, 186500);
+INSERT INTO produzione VALUES(5,53	, 2012, 100900);
+ 
+INSERT INTO produzione VALUES(5,45	, 2012, 74900);
+INSERT INTO produzione VALUES(5,45	, 2014, 50300);
+INSERT INTO produzione VALUES(5,45	, 2011, 153300);
+ 
+INSERT INTO produzione VALUES(5,33	, 2011, 158700);
+INSERT INTO produzione VALUES(5,33	, 2010, 182400);
+INSERT INTO produzione VALUES(5,33	, 2012, 38700);
+ 
+INSERT INTO produzione VALUES(5,56	, 2009, 28600);
+INSERT INTO produzione VALUES(5,56	, 2013, 126600);
+INSERT INTO produzione VALUES(5,56	, 2012, 114300);
+ 
+INSERT INTO produzione VALUES(5,48	, 2012, 150700);
+INSERT INTO produzione VALUES(5,48	, 2011, 36500);
+INSERT INTO produzione VALUES(5,48	, 2013, 196400);
+ 
+INSERT INTO produzione VALUES(5,16	, 2012, 36000);
+INSERT INTO produzione VALUES(5,16	, 2013, 43800);
+INSERT INTO produzione VALUES(5,16	, 2014, 14200);
+ 
+INSERT INTO produzione VALUES(5,30	, 2013, 165800);
+INSERT INTO produzione VALUES(5,30	, 2014, 72400);
+INSERT INTO produzione VALUES(5,30	, 2012, 166400);
+ 
+INSERT INTO produzione VALUES(5,18	, 2014, 11800);
+INSERT INTO produzione VALUES(5,18	, 2013, 154700);
+INSERT INTO produzione VALUES(5,18	, 2012, 177100);
+ 
+INSERT INTO produzione VALUES(5,13	, 2009, 57500);
+INSERT INTO produzione VALUES(5,13	, 2010, 167400);
+INSERT INTO produzione VALUES(5,13	, 2011, 111200);
+ 
+INSERT INTO produzione VALUES(5,51	, 2013, 162300);
+INSERT INTO produzione VALUES(5,51	, 2010, 76600);
+INSERT INTO produzione VALUES(5,51	, 2012, 73900);
+ 
+INSERT INTO produzione VALUES(5,17	, 2013, 120600);
+INSERT INTO produzione VALUES(5,17	, 2010, 129100);
+INSERT INTO produzione VALUES(5,17	, 2012, 70500);
+ 
+INSERT INTO produzione VALUES(5,9	, 2013, 62300);
+INSERT INTO produzione VALUES(5,9	, 2012, 146200);
+INSERT INTO produzione VALUES(5,9	, 2009, 60900);
+ 
+INSERT INTO produzione VALUES(5,5	, 2012, 27600);
+INSERT INTO produzione VALUES(5,5	, 2010, 162700);
+INSERT INTO produzione VALUES(5,5	, 2013, 165600);
+ 
+INSERT INTO produzione VALUES(5,43	, 2013, 148500);
+INSERT INTO produzione VALUES(5,43	, 2012, 162800);
+INSERT INTO produzione VALUES(5,43	, 2010, 166500);
+ 
+INSERT INTO produzione VALUES(5,26	, 2012, 178400);
+INSERT INTO produzione VALUES(5,26	, 2009, 32700);
+INSERT INTO produzione VALUES(5,26	, 2010, 17500);
+ 
+INSERT INTO produzione VALUES(5,49	, 2011, 143400);
+INSERT INTO produzione VALUES(5,49	, 2010, 31400);
+INSERT INTO produzione VALUES(5,49	, 2014, 171300);
+ 
+INSERT INTO produzione VALUES(5,52	, 2009, 69900);
+INSERT INTO produzione VALUES(5,52	, 2010, 9500);
+INSERT INTO produzione VALUES(5,52	, 2011, 105200);
+ 
+INSERT INTO produzione VALUES(5,3	, 2012, 65400);
+INSERT INTO produzione VALUES(5,3	, 2013, 40700);
+INSERT INTO produzione VALUES(5,3	, 2014, 49000);
+ 
+INSERT INTO produzione VALUES(6,12	, 2009, 28100);
+INSERT INTO produzione VALUES(6,12	, 2013, 56100);
+INSERT INTO produzione VALUES(6,12	, 2012, 144300);
+ 
+INSERT INTO produzione VALUES(6,5	, 2012, 57000);
+INSERT INTO produzione VALUES(6,5	, 2014, 38500);
+INSERT INTO produzione VALUES(6,5	, 2013, 143000);
+ 
+INSERT INTO produzione VALUES(6,26	, 2013, 163800);
+INSERT INTO produzione VALUES(6,26	, 2010, 48600);
+INSERT INTO produzione VALUES(6,26	, 2011, 104600);
+ 
+INSERT INTO produzione VALUES(6,11	, 2011, 46100);
+INSERT INTO produzione VALUES(6,11	, 2010, 9800);
+INSERT INTO produzione VALUES(6,11	, 2009, 98100);
+ 
+INSERT INTO produzione VALUES(6,29	, 2011, 177100);
+INSERT INTO produzione VALUES(6,29	, 2009, 117900);
+INSERT INTO produzione VALUES(6,29	, 2013, 128700);
+ 
+INSERT INTO produzione VALUES(6,49	, 2013, 118800);
+INSERT INTO produzione VALUES(6,49	, 2014, 108900);
+INSERT INTO produzione VALUES(6,49	, 2009, 12400);
+ 
+INSERT INTO produzione VALUES(6,13	, 2013, 177400);
+INSERT INTO produzione VALUES(6,13	, 2012, 63100);
+INSERT INTO produzione VALUES(6,13	, 2009, 100300);
+ 
+INSERT INTO produzione VALUES(6,39	, 2013, 190300);
+INSERT INTO produzione VALUES(6,39	, 2012, 17600);
+INSERT INTO produzione VALUES(6,39	, 2011, 60200);
+ 
+INSERT INTO produzione VALUES(6,14	, 2011, 175000);
+INSERT INTO produzione VALUES(6,14	, 2014, 135400);
+INSERT INTO produzione VALUES(6,14	, 2012, 12600);
+ 
+INSERT INTO produzione VALUES(6,17	, 2011, 160400);
+INSERT INTO produzione VALUES(6,17	, 2010, 69200);
+INSERT INTO produzione VALUES(6,17	, 2012, 135600);
+ 
+INSERT INTO produzione VALUES(6,47	, 2014, 149500);
+INSERT INTO produzione VALUES(6,47	, 2009, 184000);
+INSERT INTO produzione VALUES(6,47	, 2011, 13700);
+ 
+INSERT INTO produzione VALUES(6,33	, 2010, 43300);
+INSERT INTO produzione VALUES(6,33	, 2011, 29100);
+INSERT INTO produzione VALUES(6,33	, 2012, 55400);
+ 
+INSERT INTO produzione VALUES(6,6	, 2014, 42700);
+INSERT INTO produzione VALUES(6,6	, 2011, 135300);
+INSERT INTO produzione VALUES(6,6	, 2010, 84500);
+ 
+INSERT INTO produzione VALUES(6,35	, 2014, 29200);
+INSERT INTO produzione VALUES(6,35	, 2012, 71300);
+INSERT INTO produzione VALUES(6,35	, 2013, 152800);
+ 
+INSERT INTO produzione VALUES(6,46	, 2013, 165200);
+INSERT INTO produzione VALUES(6,46	, 2011, 142200);
+INSERT INTO produzione VALUES(6,46	, 2009, 193300);
+ 
+INSERT INTO produzione VALUES(6,55	, 2013, 162300);
+INSERT INTO produzione VALUES(6,55	, 2012, 76800);
+INSERT INTO produzione VALUES(6,55	, 2014, 26600);
+ 
+INSERT INTO produzione VALUES(6,7	, 2011, 133400);
+INSERT INTO produzione VALUES(6,7	, 2012, 148000);
+INSERT INTO produzione VALUES(6,7	, 2013, 125500);
+ 
+INSERT INTO produzione VALUES(6,3	, 2010, 7700);
+INSERT INTO produzione VALUES(6,3	, 2012, 68900);
+INSERT INTO produzione VALUES(6,3	, 2014, 8900);
+ 
+INSERT INTO produzione VALUES(6,50	, 2010, 122000);
+INSERT INTO produzione VALUES(6,50	, 2014, 191200);
+INSERT INTO produzione VALUES(6,50	, 2013, 16000);
+ 
+INSERT INTO produzione VALUES(6,44	, 2012, 13000);
+INSERT INTO produzione VALUES(6,44	, 2011, 13600);
+INSERT INTO produzione VALUES(6,44	, 2013, 16200);
+ 
+INSERT INTO produzione VALUES(6,51	, 2011, 150200);
+INSERT INTO produzione VALUES(6,51	, 2010, 24500);
+INSERT INTO produzione VALUES(6,51	, 2012, 133200);
+ 
+INSERT INTO produzione VALUES(6,16	, 2013, 77200);
+INSERT INTO produzione VALUES(6,16	, 2009, 143300);
+INSERT INTO produzione VALUES(6,16	, 2014, 183000);
+ 
+INSERT INTO produzione VALUES(6,45	, 2011, 129700);
+INSERT INTO produzione VALUES(6,45	, 2010, 145100);
+INSERT INTO produzione VALUES(6,45	, 2012, 156800);
+
+INSERT INTO cantina(idc, nome, provincia) VALUES (7, 'Azienda Agricola Zanasi', 'Modena');
+
+INSERT INTO vino(idv, nome, tipo) VALUES (58, 'Rosato di Modena', 'rose');
+
+INSERT INTO produzione VALUES (7, 58, 2014, 1000);
+
+
+INSERT INTO cliente(nominativo, piva) VALUES
+('Cantina del Sole', '01234567890'),
+('Vini Rossi Srl', '09876543210'),
+('Bianchi & Co', '12345678901'),
+('Vinicola Italiana', '23456789012'),
+('Vini di Toscana', '34567890123'),
+('Cantine Verdi', '45678901234'),
+('Bacco e Nettare', '56789012345'),
+('Vini d''Oro', '67890123456'),
+('Cantina di Roma', '78901234567'),
+('Vini del Piemonte', '89012345678'),
+('Terre di Vino', '90123456789'),
+('Cantina delle Vigne', '01234567891'),
+('Vini e Sapori', '09876543211'),
+('Cantina del Chianti', '12345678902'),
+('Vini del Sud', '23456789013'),
+('Cantina del Lago', '34567890124'),
+('Rosso e Bianco', '45678901235'),
+('Vini di Mare', '56789012346'),
+('Cantina Antica', '67890123457'),
+('Vini dei Colli', '78901234568'),
+('Cantina Fiorita', '89012345679'),
+('Vini di Campagna', '90123456780'),
+('Cantina del Borgo', '01234567892'),
+('Vini delle Dolomiti', '09876543212'),
+('Cantina del Vento', '12345678903'),
+('Vini del Monferrato', '23456789014'),
+('Cantina delle Stelle', '34567890125'),
+('Vini di Verona', '45678901236'),
+('Cantina del Sasso', '56789012347'),
+('Vini del Vesuvio', '67890123458'),
+('Cantina dei Sapori', '78901234569'),
+('Vini del Garda', '89012345680'),
+('Cantina del Monte', '90123456781'),
+('Vini di Abruzzo', '01234567893'),
+('Cantina dei Fiori', '09876543213'),
+('Vini del Trentino', '12345678904'),
+('Cantina della Luna', '23456789015'),
+('Vini di Sicilia', '34567890126'),
+('Cantina della Valle', '45678901237'),
+('Vini delle Marche', '56789012348'),
+('Cantina del Pozzo', '67890123459'),
+('Vini di Liguria', '78901234570'),
+('Cantina della Torre', '89012345681'),
+('Vini del Friuli', '90123456782'),
+('Cantina della Fonte', '01234567894'),
+('Vini del Lazio', '09876543214'),
+('Cantina del Porto', '12345678905'),
+('Vini di Sardegna', '23456789016'),
+('Cantina dell''Alba', '34567890127');
+
+INSERT INTO vendita(idv, idc, anno, bottiglie, datav, piva) VALUES
+('10', '3', '2009', '12322', '2015-04-05', '78901234568'),
+('43', '5', '2010', '21126', '2015-07-14', '89012345681'),
+('5', '1', '2011', '12047', '2015-08-11', '34567890124'),
+('11', '6', '2011', '6649', '2015-06-21', '90123456780'),
+('16', '6', '2013', '17274', '2015-10-10', '67890123457'),
+('58', '7', '2014', '311', '2015-11-28', '12345678905'),
+('49', '2', '2012', '49763', '2015-06-03', '23456789013'),
+('26', '2', '2011', '34486', '2015-09-04', '23456789013'),
+('39', '6', '2013', '23436', '2015-02-13', '89012345680'),
+('17', '6', '2011', '51821', '2015-05-13', '12345678902'),
+('10', '3', '2012', '47111', '2015-11-06', '90123456789'),
+('3', '6', '2010', '968', '2015-09-07', '67890123459'),
+('34', '3', '2012', '30721', '2015-01-29', '56789012348'),
+('34', '4', '2010', '20283', '2015-08-24', '12345678905'),
+('43', '5', '2010', '39317', '2015-08-09', '09876543210'),
+('41', '2', '2009', '3601', '2015-12-13', '90123456780'),
+('51', '6', '2010', '3943', '2015-08-02', '56789012348'),
+('45', '5', '2011', '29867', '2015-01-29', '56789012348'),
+('6', '6', '2010', '23326', '2015-12-27', '90123456789'),
+('51', '5', '2012', '11718', '2015-12-10', '56789012347'),
+('5', '6', '2014', '5033', '2015-03-24', '78901234567'),
+('26', '6', '2013', '43921', '2015-11-04', '45678901234'),
+('42', '1', '2014', '26619', '2015-08-09', '09876543214'),
+('12', '1', '2013', '29301', '2015-10-29', '90123456782'),
+('46', '6', '2009', '28669', '2015-12-26', '90123456789'),
+('26', '4', '2014', '14153', '2015-02-12', '90123456782'),
+('10', '2', '2011', '9297', '2015-02-12', '23456789014'),
+('47', '4', '2013', '17707', '2015-07-19', '23456789015'),
+('31', '2', '2010', '14889', '2015-06-21', '78901234570'),
+('47', '6', '2014', '33105', '2015-06-28', '34567890126'),
+('11', '4', '2014', '42001', '2015-05-11', '09876543212'),
+('46', '6', '2009', '33420', '2015-05-01', '23456789014'),
+('15', '2', '2012', '21681', '2015-01-30', '34567890126'),
+('51', '6', '2011', '25044', '2015-08-05', '90123456789'),
+('46', '6', '2013', '51329', '2015-12-27', '89012345680'),
+('17', '6', '2011', '13608', '2015-10-07', '09876543210'),
+('47', '6', '2011', '3077', '2015-04-03', '34567890124'),
+('56', '5', '2013', '33564', '2015-08-09', '01234567894'),
+('31', '2', '2013', '49223', '2015-10-08', '23456789015'),
+('47', '6', '2011', '1993', '2015-07-20', '45678901237'),
+('48', '5', '2012', '17885', '2015-04-12', '01234567891'),
+('35', '3', '2012', '15417', '2015-08-18', '23456789014'),
+('41', '2', '2013', '10028', '2015-08-03', '34567890126'),
+('33', '5', '2012', '7190', '2015-06-09', '90123456789'),
+('31', '4', '2012', '6949', '2015-01-07', '23456789015'),
+('56', '2', '2012', '40585', '2015-12-19', '12345678904'),
+('52', '5', '2010', '1194', '2015-06-19', '01234567894'),
+('5', '1', '2014', '26101', '2015-12-14', '12345678905'),
+('35', '3', '2013', '23616', '2015-05-13', '56789012347'),
+('16', '2', '2014', '8758', '2015-09-21', '89012345678'),
+('25', '4', '2013', '14997', '2015-01-26', '45678901237'),
+('7', '6', '2011', '22944', '2015-09-25', '90123456789'),
+('17', '5', '2013', '27172', '2015-07-19', '67890123459'),
+('28', '1', '2010', '13548', '2015-03-15', '34567890125'),
+('37', '2', '2013', '10485', '2015-06-09', '01234567893'),
+('26', '2', '2010', '27888', '2015-10-13', '56789012347'),
+('31', '2', '2014', '31250', '2015-05-15', '12345678902'),
+('11', '4', '2013', '22376', '2015-06-27', '56789012348'),
+('31', '2', '2013', '29871', '2015-12-06', '56789012347'),
+('49', '4', '2012', '18057', '2015-12-11', '67890123457'),
+('11', '1', '2012', '29506', '2015-12-30', '45678901234'),
+('46', '6', '2013', '28046', '2015-10-30', '56789012348'),
+('43', '5', '2013', '44107', '2015-08-18', '90123456780'),
+('13', '2', '2009', '33728', '2015-02-28', '45678901234'),
+('18', '5', '2013', '40671', '2015-04-06', '01234567894'),
+('12', '1', '2013', '8576', '2015-04-30', '78901234567'),
+('5', '6', '2013', '43882', '2015-03-24', '67890123457'),
+('12', '1', '2012', '33052', '2015-07-09', '78901234568'),
+('35', '3', '2012', '9830', '2015-09-07', '78901234567'),
+('45', '5', '2011', '35523', '2015-11-15', '45678901237'),
+('50', '6', '2013', '2755', '2015-11-28', '12345678902'),
+('5', '6', '2014', '7977', '2015-02-20', '78901234568'),
+('49', '6', '2009', '1420', '2015-12-10', '12345678902'),
+('53', '1', '2011', '1179', '2015-12-02', '89012345681'),
+('30', '5', '2014', '13958', '2015-05-24', '78901234570'),
+('16', '6', '2013', '13113', '2015-12-02', '45678901235'),
+('5', '6', '2014', '8084', '2015-12-30', '23456789015'),
+('10', '2', '2009', '51049', '2015-12-08', '89012345681'),
+('33', '5', '2011', '38629', '2015-01-14', '45678901237'),
+('46', '6', '2009', '26916', '2015-06-01', '34567890123'),
+('49', '2', '2011', '26844', '2015-09-08', '34567890123'),
+('51', '6', '2011', '16871', '2015-10-29', '34567890123'),
+('47', '2', '2009', '37866', '2015-08-03', '01234567892'),
+('19', '1', '2010', '21013', '2015-07-14', '34567890123'),
+('33', '1', '2010', '10404', '2015-10-08', '89012345678'),
+('16', '2', '2014', '3660', '2015-10-17', '09876543210'),
+('11', '4', '2013', '44377', '2015-07-19', '78901234568'),
+('50', '6', '2013', '3096', '2015-09-08', '12345678905'),
+('12', '2', '2010', '24522', '2015-06-27', '09876543213'),
+('5', '5', '2010', '20438', '2015-07-04', '12345678902'),
+('17', '5', '2012', '7201', '2015-04-12', '89012345681'),
+('48', '5', '2011', '6611', '2015-12-08', '12345678904'),
+('12', '1', '2012', '23991', '2015-06-27', '12345678902'),
+('28', '1', '2011', '8936', '2015-09-24', '12345678904'),
+('12', '4', '2010', '47241', '2015-10-02', '34567890123'),
+('18', '5', '2014', '2357', '2015-02-26', '67890123456'),
+('17', '5', '2012', '7976', '2015-05-14', '09876543213'),
+('35', '6', '2014', '7050', '2015-06-20', '89012345680'),
+('51', '6', '2011', '26104', '2015-10-24', '56789012346'),
+('5', '4', '2011', '10086', '2015-09-25', '89012345679'),
+('49', '5', '2014', '51176', '2015-12-30', '12345678904'),
+('12', '4', '2013', '37439', '2015-02-20', '23456789013'),
+('52', '4', '2011', '21264', '2015-03-18', '23456789016'),
+('46', '6', '2013', '12867', '2015-08-26', '67890123458'),
+('46', '6', '2011', '33066', '2015-01-29', '67890123459'),
+('7', '6', '2012', '24104', '2015-02-04', '34567890126'),
+('13', '6', '2012', '19934', '2015-12-16', '23456789016'),
+('52', '4', '2011', '8217', '2015-11-13', '45678901237'),
+('11', '1', '2011', '14000', '2015-04-29', '12345678904'),
+('56', '2', '2012', '41167', '2015-04-09', '09876543212'),
+('17', '5', '2012', '7231', '2015-06-28', '34567890123'),
+('51', '5', '2013', '32005', '2015-07-09', '01234567893'),
+('6', '5', '2014', '7186', '2015-10-30', '12345678901'),
+('13', '5', '2011', '35058', '2015-04-29', '09876543211'),
+('12', '4', '2010', '31528', '2015-10-28', '23456789015'),
+('11', '4', '2013', '35045', '2015-01-29', '67890123457'),
+('31', '4', '2012', '14596', '2015-07-14', '89012345678'),
+('45', '5', '2012', '8116', '2015-07-22', '23456789013'),
+('53', '5', '2013', '19388', '2015-05-22', '56789012348'),
+('34', '4', '2009', '39532', '2015-09-18', '34567890126'),
+('37', '2', '2013', '10717', '2015-02-12', '34567890126'),
+('8', '2', '2010', '14859', '2015-06-28', '12345678903'),
+('51', '6', '2011', '11981', '2015-05-24', '67890123458'),
+('6', '6', '2014', '12915', '2015-05-27', '45678901237'),
+('11', '1', '2010', '26673', '2015-01-06', '12345678902'),
+('37', '2', '2010', '7862', '2015-08-17', '34567890126'),
+('13', '5', '2010', '38809', '2015-06-21', '67890123459'),
+('31', '4', '2012', '8316', '2015-08-16', '45678901236'),
+('47', '2', '2011', '45324', '2015-05-22', '90123456789'),
+('53', '5', '2013', '31615', '2015-07-28', '01234567891'),
+('39', '6', '2012', '1766', '2015-07-19', '12345678905'),
+('11', '4', '2010', '17449', '2015-04-17', '09876543210'),
+('3', '6', '2014', '1302', '2015-12-11', '90123456789'),
+('47', '2', '2009', '14303', '2015-01-31', '78901234570'),
+('13', '5', '2010', '16121', '2015-06-27', '34567890127'),
+('7', '4', '2009', '24176', '2015-06-27', '56789012345'),
+('34', '4', '2011', '61697', '2015-07-25', '78901234567'),
+('56', '2', '2013', '32083', '2015-08-10', '09876543212'),
+('42', '1', '2012', '12863', '2015-08-20', '67890123457'),
+('45', '5', '2014', '13749', '2015-11-12', '90123456782'),
+('34', '4', '2009', '10928', '2015-07-28', '01234567890'),
+('33', '6', '2010', '9157', '2015-01-18', '23456789012'),
+('28', '2', '2011', '23613', '2015-07-20', '56789012346'),
+('3', '5', '2013', '10843', '2015-04-03', '23456789012'),
+('34', '2', '2012', '37167', '2015-08-24', '90123456780'),
+('56', '2', '2012', '15700', '2015-04-26', '78901234570'),
+('9', '5', '2013', '6464', '2015-06-27', '09876543212'),
+('12', '1', '2013', '6812', '2015-01-07', '09876543210'),
+('11', '6', '2011', '7967', '2015-12-30', '23456789013'),
+('13', '2', '2009', '25047', '2015-02-12', '89012345678'),
+('33', '6', '2012', '15703', '2015-02-20', '34567890124'),
+('53', '4', '2012', '27093', '2015-11-25', '12345678904'),
+('56', '5', '2012', '37678', '2015-01-26', '23456789014'),
+('14', '6', '2014', '14525', '2015-05-19', '90123456780'),
+('10', '2', '2009', '30049', '2015-02-13', '89012345679'),
+('54', '2', '2011', '17039', '2015-08-11', '23456789015'),
+('26', '5', '2012', '37926', '2015-01-05', '23456789016'),
+('11', '1', '2012', '22915', '2015-09-07', '12345678902'),
+('49', '4', '2012', '15866', '2015-06-19', '01234567893'),
+('3', '6', '2014', '1203', '2015-07-14', '12345678902'),
+('41', '2', '2011', '9601', '2015-02-06', '09876543213'),
+('17', '5', '2010', '22328', '2015-12-14', '34567890126'),
+('17', '5', '2012', '9690', '2015-09-25', '34567890127'),
+('56', '2', '2012', '15446', '2015-07-24', '09876543213'),
+('48', '5', '2012', '20473', '2015-04-23', '56789012345'),
+('30', '5', '2014', '6237', '2015-04-09', '56789012348'),
+('56', '2', '2013', '23554', '2015-12-14', '34567890127'),
+('49', '2', '2010', '16895', '2015-10-29', '56789012345'),
+('15', '2', '2012', '29318', '2015-12-02', '01234567892'),
+('29', '6', '2009', '19630', '2015-04-06', '78901234568'),
+('26', '5', '2010', '2169', '2015-01-05', '90123456789'),
+('42', '1', '2009', '17049', '2015-06-20', '45678901235'),
+('47', '2', '2009', '14752', '2015-12-13', '23456789016'),
+('8', '2', '2013', '3803', '2015-09-03', '09876543210'),
+('48', '5', '2011', '4840', '2015-02-13', '90123456780'),
+('35', '3', '2013', '10890', '2015-07-04', '89012345679'),
+('51', '5', '2013', '34054', '2015-05-14', '45678901237'),
+('16', '6', '2009', '22828', '2015-08-26', '45678901234'),
+('3', '6', '2012', '12612', '2015-11-28', '34567890125'),
+('26', '6', '2011', '17103', '2015-12-19', '09876543213'),
+('31', '2', '2010', '13929', '2015-12-30', '45678901235'),
+('37', '2', '2013', '7626', '2015-04-15', '45678901236'),
+('15', '2', '2013', '53852', '2015-04-26', '23456789016'),
+('5', '1', '2009', '41769', '2015-03-11', '89012345679'),
+('53', '4', '2010', '13894', '2015-05-31', '23456789014'),
+('16', '5', '2012', '10365', '2015-12-10', '78901234568'),
+('18', '2', '2010', '7955', '2015-10-24', '78901234569'),
+('47', '6', '2011', '1473', '2015-04-29', '12345678905'),
+('6', '6', '2011', '14706', '2015-08-16', '23456789016'),
+('30', '5', '2012', '51514', '2015-09-23', '09876543214'),
+('43', '1', '2013', '9607', '2015-11-28', '90123456782'),
+('30', '5', '2012', '15159', '2015-09-18', '78901234567'),
+('26', '4', '2013', '3672', '2015-06-03', '23456789012'),
+('26', '6', '2010', '13645', '2015-03-24', '01234567892'),
+('47', '6', '2011', '1066', '2015-03-15', '56789012347'),
+('16', '5', '2012', '5445', '2015-07-11', '90123456789'),
+('26', '5', '2009', '5679', '2015-12-03', '23456789016'),
+('49', '6', '2013', '24533', '2015-06-01', '34567890125'),
+('12', '2', '2013', '9852', '2015-02-06', '12345678902'),
+('31', '4', '2014', '30116', '2015-07-07', '34567890123'),
+('8', '2', '2013', '1597', '2015-03-15', '67890123457'),
+('3', '5', '2012', '15868', '2015-03-24', '34567890124'),
+('8', '2', '2013', '3062', '2015-05-04', '67890123458'),
+('35', '6', '2014', '7377', '2015-01-26', '89012345681'),
+('30', '5', '2014', '10088', '2015-04-29', '78901234570'),
+('15', '2', '2012', '35718', '2015-12-14', '01234567891'),
+('6', '5', '2012', '4050', '2015-12-30', '09876543210'),
+('35', '3', '2012', '15286', '2015-03-24', '09876543211'),
+('47', '2', '2012', '23404', '2015-12-26', '12345678901'),
+('27', '4', '2012', '39252', '2015-11-04', '23456789016'),
+('51', '6', '2012', '21957', '2015-04-13', '90123456789'),
+('17', '6', '2011', '25141', '2015-12-26', '01234567891'),
+('34', '2', '2012', '33128', '2015-06-01', '67890123458'),
+('43', '5', '2012', '21838', '2015-06-09', '89012345679'),
+('3', '5', '2012', '5059', '2015-02-06', '12345678904'),
+('53', '1', '2011', '1806', '2015-08-24', '09876543210'),
+('56', '5', '2009', '6239', '2015-10-30', '23456789016'),
+('12', '4', '2010', '19378', '2015-10-28', '23456789015'),
+('37', '2', '2011', '25190', '2015-02-28', '45678901235'),
+('45', '6', '2012', '20617', '2015-03-24', '12345678901'),
+('26', '6', '2010', '9924', '2015-08-21', '12345678905'),
+('34', '4', '2009', '23621', '2015-08-05', '23456789015'),
+('49', '2', '2011', '12296', '2015-10-25', '56789012346'),
+('48', '5', '2013', '37937', '2015-10-02', '45678901236'),
+('33', '1', '2012', '30120', '2015-09-21', '45678901236'),
+('42', '1', '2009', '4748', '2015-11-25', '67890123457'),
+('26', '5', '2009', '4391', '2015-03-24', '12345678905'),
+('33', '5', '2010', '39468', '2015-09-15', '23456789014'),
+('56', '5', '2009', '6362', '2015-04-30', '23456789013'),
+('46', '6', '2009', '23986', '2015-04-11', '67890123457'),
+('49', '5', '2011', '27008', '2015-09-23', '90123456781'),
+('11', '4', '2013', '31290', '2015-12-22', '89012345678'),
+('7', '6', '2013', '23129', '2015-12-30', '23456789012'),
+('8', '2', '2011', '25815', '2015-06-01', '09876543210'),
+('39', '6', '2013', '39158', '2015-09-30', '45678901236'),
+('9', '5', '2009', '17129', '2015-12-04', '90123456782'),
+('26', '6', '2011', '9007', '2015-07-29', '90123456789'),
+('52', '5', '2010', '843', '2015-11-25', '12345678902'),
+('9', '5', '2013', '10468', '2015-07-28', '12345678904'),
+('45', '5', '2011', '11512', '2015-11-16', '12345678905'),
+('11', '6', '2010', '1348', '2015-12-11', '09876543212'),
+('56', '5', '2012', '10062', '2015-08-16', '90123456781'),
+('58', '7', '2014', '177', '2015-01-17', '01234567890'),
+('16', '2', '2011', '43556', '2015-01-17', '90123456782'),
+('5', '5', '2013', '25205', '2015-12-07', '90123456789'),
+('13', '5', '2011', '19841', '2015-09-30', '34567890126'),
+('12', '1', '2012', '15049', '2015-05-11', '45678901235'),
+('45', '6', '2010', '22082', '2015-08-05', '45678901236'),
+('39', '6', '2012', '4907', '2015-10-28', '89012345678'),
+('11', '1', '2011', '27598', '2015-05-11', '23456789014'),
+('25', '4', '2013', '8023', '2015-04-23', '34567890123'),
+('8', '2', '2011', '13370', '2015-12-19', '67890123456'),
+('31', '2', '2014', '11572', '2015-03-26', '01234567891'),
+('47', '6', '2014', '38572', '2015-09-01', '89012345678'),
+('25', '4', '2009', '14559', '2015-04-26', '09876543211'),
+('33', '6', '2011', '6884', '2015-12-11', '78901234570'),
+('6', '6', '2010', '19351', '2015-08-17', '90123456780'),
+('47', '6', '2009', '28654', '2015-01-05', '45678901235'),
+('6', '5', '2009', '38333', '2015-08-10', '78901234570'),
+('30', '3', '2012', '4448', '2015-07-01', '56789012347'),
+('52', '4', '2011', '16044', '2015-10-17', '89012345678'),
+('54', '2', '2011', '27191', '2015-10-17', '23456789012'),
+('16', '2', '2011', '31597', '2015-12-11', '90123456789'),
+('11', '4', '2013', '16790', '2015-04-13', '56789012346'),
+('29', '6', '2011', '26340', '2015-01-29', '09876543214'),
+('5', '1', '2014', '16592', '2015-04-29', '89012345681'),
+('28', '1', '2009', '34854', '2015-05-31', '45678901236'),
+('39', '6', '2013', '34227', '2015-10-29', '12345678902'),
+('49', '4', '2009', '18348', '2015-11-15', '78901234569'),
+('34', '3', '2011', '18155', '2015-10-17', '09876543212'),
+('11', '4', '2010', '12387', '2015-02-13', '78901234569'),
+('54', '2', '2011', '38949', '2015-04-15', '45678901235'),
+('18', '5', '2012', '58265', '2015-07-14', '90123456789'),
+('53', '5', '2011', '3025', '2015-11-06', '09876543212'),
+('49', '5', '2010', '8936', '2015-12-03', '45678901235'),
+('47', '6', '2011', '1025', '2015-08-24', '09876543211'),
+('19', '1', '2014', '36271', '2015-02-06', '09876543212'),
+('28', '2', '2014', '29503', '2015-11-25', '34567890127'),
+('53', '5', '2012', '23539', '2015-12-16', '45678901234'),
+('49', '4', '2011', '55830', '2015-06-27', '12345678903'),
+('5', '1', '2011', '15126', '2015-10-13', '12345678902'),
+('12', '1', '2011', '15684', '2015-01-18', '09876543212'),
+('29', '6', '2013', '23513', '2015-09-15', '90123456780'),
+('12', '6', '2013', '7737', '2015-04-30', '89012345680'),
+('55', '6', '2012', '8859', '2015-08-26', '78901234569'),
+('37', '1', '2014', '10362', '2015-06-03', '45678901237'),
+('33', '6', '2011', '7179', '2015-06-01', '90123456782'),
+('26', '2', '2011', '19062', '2015-12-14', '45678901234'),
+('37', '1', '2014', '4425', '2015-07-28', '78901234568'),
+('31', '2', '2013', '29574', '2015-11-04', '12345678905'),
+('30', '3', '2011', '25805', '2015-08-16', '23456789014'),
+('7', '6', '2011', '34654', '2015-05-19', '01234567890'),
+('46', '6', '2011', '14207', '2015-03-21', '56789012348'),
+('11', '6', '2011', '5312', '2015-07-19', '67890123457'),
+('39', '2', '2011', '45716', '2015-12-11', '01234567890'),
+('38', '2', '2010', '30022', '2015-08-10', '23456789015'),
+('9', '5', '2013', '9862', '2015-12-26', '67890123458'),
+('28', '2', '2014', '10010', '2015-12-28', '12345678902'),
+('6', '5', '2009', '32031', '2015-08-09', '12345678904'),
+('34', '3', '2010', '18158', '2015-04-15', '23456789014'),
+('30', '3', '2012', '3078', '2015-11-16', '67890123457'),
+('34', '3', '2010', '7228', '2015-02-06', '56789012345'),
+('35', '6', '2014', '3401', '2015-08-19', '78901234568'),
+('28', '1', '2011', '7289', '2015-01-30', '23456789016'),
+('14', '6', '2011', '24892', '2015-09-24', '45678901234'),
+('6', '5', '2009', '12191', '2015-06-24', '90123456782'),
+('45', '5', '2014', '4276', '2015-05-13', '01234567894'),
+('43', '1', '2013', '3988', '2015-04-13', '78901234567'),
+('28', '2', '2014', '12589', '2015-05-19', '34567890127'),
+('6', '5', '2009', '21759', '2015-12-06', '90123456789'),
+('53', '5', '2013', '15421', '2015-10-29', '90123456789'),
+('49', '2', '2010', '5614', '2015-11-25', '09876543210'),
+('36', '3', '2014', '4456', '2015-07-14', '23456789013'),
+('52', '4', '2011', '5225', '2015-08-02', '45678901236'),
+('51', '6', '2010', '6281', '2015-06-19', '56789012346'),
+('6', '6', '2011', '18547', '2015-12-11', '09876543210'),
+('23', '2', '2014', '11211', '2015-06-19', '09876543212'),
+('17', '5', '2013', '10047', '2015-10-24', '90123456789'),
+('56', '2', '2013', '21574', '2015-06-01', '34567890123'),
+('33', '5', '2010', '31318', '2015-08-02', '34567890123'),
+('13', '2', '2009', '24255', '2015-07-22', '23456789014'),
+('13', '5', '2009', '5942', '2015-07-20', '67890123456'),
+('39', '2', '2014', '39461', '2015-06-20', '56789012346'),
+('35', '6', '2014', '1456', '2015-08-19', '78901234569'),
+('11', '6', '2011', '4096', '2015-08-20', '12345678905'),
+('39', '2', '2011', '22139', '2015-09-20', '23456789013'),
+('31', '4', '2009', '14959', '2015-06-09', '45678901235'),
+('30', '3', '2012', '3253', '2015-12-03', '67890123456'),
+('47', '2', '2009', '9591', '2015-07-25', '67890123457'),
+('26', '6', '2011', '8571', '2015-06-03', '34567890124'),
+('10', '3', '2010', '23461', '2015-07-22', '45678901234'),
+('15', '2', '2013', '13473', '2015-08-20', '56789012347'),
+('33', '1', '2013', '21679', '2015-10-07', '67890123459'),
+('53', '1', '2011', '1327', '2015-05-27', '12345678902'),
+('46', '6', '2013', '21772', '2015-08-24', '09876543212'),
+('34', '4', '2009', '9705', '2015-12-03', '01234567891'),
+('28', '2', '2014', '12683', '2015-12-14', '45678901235'),
+('17', '5', '2013', '21891', '2015-06-24', '78901234569'),
+('11', '4', '2013', '5304', '2015-11-05', '09876543212'),
+('35', '6', '2013', '31756', '2015-10-24', '89012345679'),
+('38', '2', '2014', '22564', '2015-01-17', '12345678901'),
+('13', '6', '2012', '12138', '2015-05-04', '90123456780'),
+('26', '5', '2012', '25812', '2015-04-15', '56789012346'),
+('18', '5', '2013', '28718', '2015-06-19', '09876543213'),
+('26', '4', '2010', '22046', '2015-03-24', '67890123457'),
+('23', '2', '2014', '7767', '2015-05-14', '34567890127'),
+('56', '5', '2013', '30383', '2015-11-15', '09876543211'),
+('8', '2', '2013', '1061', '2015-06-18', '90123456782'),
+('29', '6', '2013', '27396', '2015-10-30', '34567890126'),
+('12', '1', '2012', '19780', '2015-06-27', '09876543211'),
+('16', '6', '2014', '34309', '2015-07-29', '34567890125'),
+('18', '5', '2012', '15656', '2015-12-10', '01234567894'),
+('51', '5', '2010', '14489', '2015-07-04', '09876543211'),
+('16', '5', '2012', '6323', '2015-06-03', '56789012347'),
+('9', '5', '2009', '11803', '2015-08-18', '23456789014'),
+('55', '6', '2012', '16018', '2015-01-14', '12345678901'),
+('54', '2', '2010', '1582', '2015-12-22', '34567890127'),
+('49', '6', '2014', '16402', '2015-03-15', '01234567893'),
+('49', '4', '2012', '9328', '2015-12-04', '78901234567'),
+('39', '6', '2013', '13809', '2015-01-09', '45678901236'),
+('16', '2', '2013', '11306', '2015-12-22', '23456789013'),
+('26', '6', '2010', '8204', '2015-11-24', '34567890126'),
+('33', '6', '2011', '3980', '2015-04-03', '67890123458'),
+('50', '6', '2014', '26077', '2015-07-04', '56789012346'),
+('13', '6', '2009', '18863', '2015-12-11', '34567890123'),
+('6', '5', '2012', '2194', '2015-09-04', '12345678901'),
+('49', '4', '2011', '41352', '2015-09-12', '09876543210'),
+('5', '4', '2011', '7355', '2015-09-03', '23456789013'),
+('43', '5', '2010', '24132', '2015-08-21', '34567890125'),
+('47', '4', '2014', '14686', '2015-09-18', '23456789012'),
+('42', '1', '2012', '13457', '2015-07-05', '23456789015'),
+('26', '5', '2009', '3715', '2015-04-17', '89012345681'),
+('9', '5', '2013', '4747', '2015-01-17', '67890123459'),
+('3', '5', '2014', '8739', '2015-07-09', '45678901234'),
+('35', '3', '2013', '4752', '2015-12-08', '23456789013'),
+('35', '3', '2012', '17285', '2015-01-09', '45678901234'),
+('13', '2', '2012', '4138', '2015-01-05', '34567890124'),
+('52', '4', '2014', '21533', '2015-12-04', '56789012348'),
+('34', '3', '2011', '13518', '2015-11-12', '78901234569'),
+('43', '5', '2012', '21198', '2015-10-08', '89012345679'),
+('53', '1', '2009', '30076', '2015-12-07', '45678901235'),
+('49', '4', '2009', '10212', '2015-12-10', '09876543213'),
+('35', '3', '2012', '7454', '2015-03-18', '23456789014'),
+('45', '6', '2012', '39745', '2015-06-21', '09876543213'),
+('35', '6', '2013', '39452', '2015-05-24', '56789012347'),
+('35', '3', '2012', '5634', '2015-12-11', '45678901237'),
+('43', '5', '2012', '34892', '2015-08-11', '01234567891'),
+('7', '4', '2012', '14858', '2015-12-04', '78901234567'),
+('9', '5', '2013', '3141', '2015-03-08', '89012345678'),
+('7', '6', '2011', '12795', '2015-06-21', '34567890127'),
+('52', '4', '2011', '8107', '2015-01-30', '34567890127'),
+('51', '6', '2011', '20490', '2015-09-08', '56789012346'),
+('43', '5', '2010', '18837', '2015-09-23', '67890123456'),
+('43', '5', '2013', '19510', '2015-01-05', '09876543210'),
+('5', '4', '2014', '16180', '2015-05-27', '67890123459'),
+('58', '7', '2014', '142', '2015-01-29', '34567890123'),
+('33', '6', '2011', '2799', '2015-05-03', '90123456781'),
+('7', '4', '2009', '54420', '2015-01-07', '90123456789'),
+('55', '6', '2013', '40509', '2015-03-24', '34567890125'),
+('56', '2', '2009', '27820', '2015-04-11', '23456789014'),
+('53', '4', '2010', '30738', '2015-12-06', '34567890124'),
+('11', '4', '2013', '8330', '2015-06-27', '09876543214'),
+('12', '2', '2010', '13539', '2015-04-23', '12345678903'),
+('5', '5', '2010', '23795', '2015-04-11', '90123456782'),
+('16', '5', '2012', '3181', '2015-07-04', '67890123459'),
+('5', '4', '2011', '4557', '2015-05-22', '09876543214'),
+('53', '4', '2014', '31993', '2015-02-12', '12345678903'),
+('31', '4', '2014', '37737', '2015-06-03', '89012345681'),
+('5', '4', '2014', '11889', '2015-12-10', '89012345679'),
+('17', '6', '2012', '21472', '2015-07-22', '09876543211'),
+('55', '6', '2012', '16999', '2015-04-26', '90123456781'),
+('26', '5', '2009', '4065', '2015-10-17', '56789012345'),
+('47', '6', '2011', '1261', '2015-03-18', '56789012345'),
+('35', '6', '2012', '22519', '2015-09-07', '09876543211'),
+('30', '3', '2010', '12815', '2015-10-29', '23456789013'),
+('13', '5', '2009', '6620', '2015-05-11', '01234567893'),
+('6', '5', '2009', '17491', '2015-04-05', '67890123456'),
+('34', '4', '2009', '6492', '2015-06-09', '12345678904'),
+('46', '6', '2009', '20255', '2015-12-11', '45678901234'),
+('37', '2', '2013', '12995', '2015-09-30', '67890123456'),
+('6', '5', '2012', '2723', '2015-05-06', '45678901234'),
+('11', '1', '2012', '21660', '2015-03-21', '12345678905'),
+('13', '2', '2009', '7619', '2015-11-05', '01234567891'),
+('55', '6', '2013', '33826', '2015-09-20', '56789012347'),
+('31', '2', '2013', '15472', '2015-04-13', '34567890125'),
+('11', '6', '2010', '2489', '2015-12-20', '67890123456'),
+('11', '4', '2013', '5552', '2015-05-05', '90123456782'),
+('34', '3', '2012', '18587', '2015-10-14', '12345678903'),
+('11', '6', '2011', '2716', '2015-08-05', '09876543210'),
+('31', '2', '2013', '7501', '2015-08-02', '23456789012'),
+('35', '3', '2011', '25292', '2015-01-31', '56789012346'),
+('42', '1', '2009', '10849', '2015-02-28', '01234567892'),
+('7', '6', '2011', '19082', '2015-09-08', '12345678905'),
+('5', '6', '2014', '2948', '2015-04-17', '45678901235'),
+('34', '2', '2012', '8755', '2015-04-15', '56789012345'),
+('47', '2', '2009', '13578', '2015-10-13', '09876543213'),
+('49', '6', '2013', '20737', '2015-04-06', '89012345680'),
+('7', '4', '2009', '35625', '2015-04-11', '34567890123'),
+('27', '4', '2012', '10298', '2015-01-26', '23456789014'),
+('51', '5', '2010', '16838', '2015-02-20', '78901234569'),
+('6', '5', '2012', '2844', '2015-08-19', '45678901235'),
+('42', '1', '2012', '12939', '2015-03-15', '89012345679'),
+('53', '4', '2012', '7490', '2015-06-09', '56789012347'),
+('53', '4', '2010', '8313', '2015-09-25', '90123456780'),
+('30', '3', '2010', '10022', '2015-06-09', '78901234570'),
+('48', '5', '2012', '17970', '2015-09-15', '34567890126'),
+('47', '2', '2011', '22383', '2015-05-14', '67890123459'),
+('58', '7', '2014', '52', '2015-12-06', '45678901234'),
+('34', '3', '2010', '9254', '2015-12-20', '23456789012'),
+('28', '1', '2009', '30271', '2015-02-08', '89012345681'),
+('18', '5', '2012', '10451', '2015-11-06', '01234567893'),
+('17', '6', '2010', '20172', '2015-10-17', '56789012348'),
+('55', '6', '2013', '11608', '2015-11-30', '78901234569'),
+('53', '4', '2014', '11850', '2015-04-17', '12345678903'),
+('12', '4', '2013', '19034', '2015-04-29', '45678901236'),
+('13', '6', '2013', '20409', '2015-06-01', '78901234570'),
+('26', '5', '2009', '4835', '2015-03-15', '23456789016'),
+('55', '6', '2012', '6186', '2015-05-14', '90123456782'),
+('45', '5', '2014', '10265', '2015-06-09', '78901234570'),
+('34', '3', '2011', '5954', '2015-04-05', '89012345679'),
+('45', '6', '2011', '31273', '2015-10-28', '89012345679'),
+('52', '4', '2011', '6376', '2015-10-10', '12345678904'),
+('31', '4', '2009', '6939', '2015-07-09', '09876543212'),
+('49', '6', '2014', '28494', '2015-08-14', '12345678904'),
+('37', '1', '2012', '26496', '2015-04-13', '23456789014'),
+('16', '5', '2014', '2554', '2015-10-29', '09876543210'),
+('52', '5', '2010', '2118', '2015-07-11', '56789012347'),
+('46', '6', '2013', '7726', '2015-03-15', '56789012347'),
+('34', '2', '2013', '18310', '2015-09-25', '78901234570'),
+('49', '2', '2012', '48010', '2015-05-24', '23456789016'),
+('33', '6', '2011', '1363', '2015-12-16', '78901234567'),
+('17', '6', '2011', '14592', '2015-01-26', '01234567892'),
+('43', '1', '2010', '37959', '2015-11-26', '89012345681'),
+('45', '6', '2011', '13653', '2015-08-24', '09876543212'),
+('23', '2', '2014', '10468', '2015-07-01', '34567890123'),
+('47', '2', '2012', '43967', '2015-09-12', '90123456782'),
+('29', '6', '2011', '26911', '2015-01-29', '67890123456'),
+('35', '3', '2011', '14138', '2015-08-11', '09876543210'),
+('53', '1', '2010', '9074', '2015-05-12', '45678901236'),
+('50', '6', '2010', '15682', '2015-12-11', '23456789014'),
+('26', '4', '2010', '6197', '2015-05-13', '01234567892'),
+('48', '5', '2012', '10195', '2015-04-06', '09876543210'),
+('49', '2', '2012', '21557', '2015-12-16', '67890123457'),
+('31', '2', '2013', '9185', '2015-06-27', '56789012348'),
+('47', '6', '2011', '1110', '2015-11-25', '23456789014'),
+('46', '6', '2013', '6721', '2015-08-10', '67890123456'),
+('45', '6', '2012', '24359', '2015-11-24', '78901234569'),
+('52', '4', '2011', '1873', '2015-01-11', '78901234568'),
+('39', '2', '2012', '11365', '2015-01-26', '09876543213'),
+('25', '4', '2013', '8183', '2015-06-20', '01234567894'),
+('13', '6', '2012', '8843', '2015-11-12', '56789012347'),
+('13', '6', '2013', '20622', '2015-09-25', '90123456789'),
+('35', '3', '2011', '17752', '2015-10-28', '23456789014'),
+('34', '3', '2010', '4632', '2015-09-08', '89012345680'),
+('29', '6', '2011', '36278', '2015-07-09', '12345678905'),
+('44', '6', '2011', '3414', '2015-06-28', '89012345679'),
+('15', '2', '2012', '27066', '2015-07-05', '67890123457'),
+('30', '3', '2010', '6869', '2015-09-24', '89012345679'),
+('34', '4', '2011', '34417', '2015-12-26', '67890123458'),
+('18', '2', '2011', '39899', '2015-06-03', '90123456789'),
+('6', '5', '2009', '21211', '2015-10-02', '56789012345'),
+('26', '2', '2011', '16497', '2015-01-17', '89012345679'),
+('6', '5', '2009', '10134', '2015-03-15', '78901234569'),
+('42', '1', '2014', '26290', '2015-07-01', '78901234570'),
+('12', '2', '2010', '10470', '2015-12-30', '78901234570'),
+('26', '6', '2013', '37565', '2015-02-06', '01234567894'),
+('34', '2', '2012', '11371', '2015-07-24', '12345678905'),
+('16', '2', '2014', '5966', '2015-11-30', '89012345680'),
+('50', '6', '2014', '17952', '2015-10-25', '89012345679'),
+('49', '2', '2012', '21298', '2015-07-29', '45678901234'),
+('11', '6', '2009', '17760', '2015-11-28', '90123456781'),
+('10', '3', '2009', '3811', '2015-08-11', '09876543212'),
+('27', '4', '2012', '12794', '2015-09-04', '90123456780'),
+('7', '6', '2013', '22800', '2015-09-04', '01234567893'),
+('12', '2', '2011', '15184', '2015-10-25', '12345678905'),
+('34', '2', '2012', '10062', '2015-11-15', '90123456782'),
+('3', '6', '2012', '14807', '2015-10-25', '12345678901'),
+('53', '1', '2009', '16059', '2015-09-07', '34567890126'),
+('5', '5', '2010', '20273', '2015-06-18', '34567890127'),
+('12', '6', '2012', '42325', '2015-11-24', '09876543213'),
+('18', '2', '2011', '26556', '2015-05-06', '56789012347'),
+('31', '4', '2009', '13780', '2015-11-11', '23456789015'),
+('34', '3', '2011', '11886', '2015-07-20', '56789012348'),
+('14', '6', '2011', '45447', '2015-03-08', '45678901235'),
+('9', '5', '2013', '7527', '2015-07-14', '78901234569'),
+('39', '6', '2011', '18215', '2015-04-23', '01234567894'),
+('50', '6', '2014', '38150', '2015-01-07', '45678901234'),
+('38', '2', '2010', '9747', '2015-08-17', '45678901237'),
+('49', '2', '2012', '15958', '2015-12-20', '09876543212'),
+('52', '5', '2009', '17399', '2015-10-25', '89012345679'),
+('41', '2', '2013', '5348', '2015-01-05', '78901234567'),
+('18', '5', '2012', '9751', '2015-11-12', '56789012347'),
+('49', '4', '2011', '27006', '2015-09-25', '67890123456'),
+('17', '6', '2010', '12320', '2015-09-08', '01234567894'),
+('16', '2', '2014', '3264', '2015-08-16', '78901234569'),
+('50', '6', '2013', '1998', '2015-12-16', '45678901235'),
+('12', '4', '2009', '55185', '2015-04-09', '23456789013'),
+('17', '6', '2010', '6763', '2015-07-29', '89012345680'),
+('49', '2', '2010', '11931', '2015-05-05', '90123456781'),
+('45', '5', '2014', '2555', '2015-06-20', '23456789015'),
+('28', '1', '2009', '18946', '2015-02-08', '45678901236'),
+('56', '5', '2013', '11703', '2015-03-26', '45678901235'),
+('16', '2', '2011', '16154', '2015-03-08', '78901234567'),
+('16', '5', '2013', '8104', '2015-09-01', '34567890125'),
+('11', '1', '2012', '26374', '2015-02-11', '23456789015'),
+('16', '2', '2014', '1868', '2015-11-28', '78901234569'),
+('51', '6', '2011', '13881', '2015-11-12', '67890123459'),
+('30', '5', '2014', '6530', '2015-12-16', '09876543211'),
+('3', '5', '2014', '9850', '2015-07-29', '12345678901'),
+('15', '2', '2014', '32807', '2015-10-02', '09876543214'),
+('43', '5', '2010', '6415', '2015-06-28', '23456789015'),
+('26', '6', '2013', '25113', '2015-12-10', '34567890127'),
+('12', '4', '2010', '10732', '2015-12-26', '34567890123'),
+('51', '5', '2010', '10117', '2015-12-02', '67890123458'),
+('9', '5', '2009', '8912', '2015-10-10', '01234567892'),
+('19', '1', '2010', '36710', '2015-06-27', '01234567891'),
+('11', '6', '2009', '9688', '2015-07-24', '34567890125'),
+('16', '6', '2013', '11454', '2015-12-08', '90123456780'),
+('56', '2', '2013', '8845', '2015-01-05', '09876543213'),
+('33', '5', '2011', '25675', '2015-06-28', '12345678901'),
+('36', '3', '2011', '11247', '2015-09-04', '89012345681'),
+('11', '1', '2010', '17405', '2015-07-22', '56789012347'),
+('34', '3', '2011', '5022', '2015-12-26', '09876543213'),
+('52', '5', '2010', '863', '2015-02-13', '12345678904'),
+('49', '6', '2009', '1776', '2015-06-09', '90123456780'),
+('44', '6', '2013', '2914', '2015-12-02', '12345678905'),
+('14', '6', '2014', '21862', '2015-04-17', '67890123458'),
+('49', '5', '2010', '5281', '2015-05-13', '23456789015'),
+('30', '3', '2012', '4726', '2015-05-01', '01234567894'),
+('16', '5', '2013', '6705', '2015-05-24', '90123456781'),
+('12', '6', '2013', '9142', '2015-12-06', '90123456782'),
+('35', '3', '2012', '8267', '2015-11-15', '67890123458'),
+('35', '3', '2012', '4655', '2015-05-13', '78901234569'),
+('37', '2', '2013', '7558', '2015-10-17', '45678901235'),
+('30', '3', '2010', '2257', '2015-10-24', '01234567894'),
+('27', '4', '2009', '3222', '2015-06-20', '09876543210'),
+('44', '6', '2013', '4023', '2015-06-01', '23456789012'),
+('30', '5', '2013', '53581', '2015-03-08', '23456789013'),
+('17', '6', '2012', '30146', '2015-10-25', '09876543213'),
+('29', '6', '2011', '14522', '2015-09-24', '12345678901'),
+('51', '5', '2012', '19487', '2015-10-17', '12345678904'),
+('35', '3', '2011', '10808', '2015-08-11', '12345678903'),
+('12', '2', '2011', '11623', '2015-11-30', '89012345678'),
+('47', '2', '2009', '5647', '2015-09-04', '34567890124'),
+('33', '6', '2011', '2182', '2015-06-03', '12345678902'),
+('28', '1', '2010', '6537', '2015-05-01', '23456789013'),
+('58', '7', '2014', '46', '2015-10-24', '78901234567'),
+('19', '1', '2010', '13723', '2015-12-19', '78901234569'),
+('53', '5', '2011', '2437', '2015-09-06', '01234567893'),
+('18', '2', '2014', '2413', '2015-04-05', '56789012347'),
+('45', '6', '2010', '13900', '2015-05-11', '09876543214'),
+('11', '1', '2010', '10860', '2015-08-05', '67890123458'),
+('56', '2', '2009', '8652', '2015-06-28', '01234567892'),
+('5', '5', '2013', '41154', '2015-12-26', '45678901237'),
+('49', '2', '2011', '23474', '2015-05-14', '23456789013'),
+('8', '2', '2011', '9669', '2015-06-20', '90123456782'),
+('48', '5', '2011', '6678', '2015-08-20', '45678901236'),
+('56', '5', '2009', '4699', '2015-02-08', '09876543214'),
+('31', '4', '2014', '31227', '2015-08-11', '01234567893'),
+('13', '6', '2013', '40423', '2015-09-12', '67890123459'),
+('44', '6', '2012', '2511', '2015-07-09', '90123456789'),
+('49', '5', '2010', '2256', '2015-03-05', '34567890124'),
+('38', '2', '2011', '17544', '2015-06-24', '01234567893'),
+('26', '4', '2014', '27638', '2015-04-23', '34567890126'),
+('28', '2', '2014', '15328', '2015-07-28', '12345678902'),
+('18', '5', '2013', '9893', '2015-12-11', '01234567893'),
+('13', '2', '2013', '4783', '2015-10-29', '09876543210'),
+('49', '4', '2012', '6106', '2015-10-02', '12345678905'),
+('16', '5', '2014', '1165', '2015-06-20', '01234567890'),
+('13', '2', '2012', '3772', '2015-05-13', '09876543212'),
+('26', '2', '2010', '19532', '2015-04-30', '09876543212'),
+('5', '6', '2014', '3073', '2015-12-16', '01234567894'),
+('11', '6', '2009', '11868', '2015-11-28', '45678901237'),
+('17', '6', '2011', '15269', '2015-08-24', '09876543210'),
+('5', '4', '2009', '28017', '2015-12-06', '45678901237'),
+('36', '3', '2011', '15856', '2015-04-23', '12345678904'),
+('7', '4', '2014', '24150', '2015-02-11', '01234567894'),
+('33', '1', '2013', '31302', '2015-06-20', '89012345678'),
+('23', '2', '2013', '30942', '2015-04-09', '01234567891'),
+('53', '5', '2012', '19819', '2015-07-09', '78901234570'),
+('3', '6', '2012', '7324', '2015-01-18', '45678901234'),
+('37', '2', '2013', '6055', '2015-03-24', '23456789016'),
+('17', '5', '2010', '34020', '2015-08-11', '34567890125'),
+('13', '5', '2010', '32486', '2015-05-14', '45678901237'),
+('15', '2', '2014', '10997', '2015-09-12', '45678901236'),
+('56', '2', '2009', '13219', '2015-06-29', '78901234568'),
+('7', '6', '2013', '19819', '2015-10-24', '23456789013'),
+('26', '4', '2014', '9768', '2015-04-23', '01234567894'),
+('37', '2', '2013', '4625', '2015-04-17', '12345678904'),
+('33', '1', '2013', '10584', '2015-10-24', '01234567893'),
+('18', '5', '2014', '2349', '2015-06-01', '23456789013'),
+('53', '4', '2014', '15580', '2015-08-11', '01234567893'),
+('15', '2', '2014', '12908', '2015-05-15', '34567890127'),
+('41', '2', '2009', '5696', '2015-05-22', '90123456782'),
+('26', '4', '2010', '6284', '2015-01-09', '01234567894'),
+('30', '3', '2012', '4009', '2015-12-19', '34567890126'),
+('15', '2', '2014', '13674', '2015-12-20', '09876543212'),
+('41', '2', '2009', '4029', '2015-12-11', '34567890125'),
+('14', '6', '2014', '16649', '2015-12-19', '56789012347'),
+('53', '1', '2010', '12112', '2015-10-24', '78901234570'),
+('49', '2', '2010', '4503', '2015-02-28', '01234567890'),
+('5', '1', '2011', '13805', '2015-05-24', '09876543210'),
+('45', '5', '2014', '6171', '2015-08-24', '01234567892'),
+('45', '5', '2012', '7349', '2015-05-12', '90123456780'),
+('13', '6', '2009', '12110', '2015-05-12', '56789012345'),
+('49', '5', '2014', '39126', '2015-05-11', '01234567891'),
+('7', '6', '2013', '14179', '2015-09-13', '12345678905'),
+('13', '2', '2009', '7406', '2015-08-24', '09876543214'),
+('13', '2', '2013', '5454', '2015-10-26', '45678901236'),
+('36', '3', '2011', '15934', '2015-02-08', '78901234569'),
+('31', '4', '2014', '10863', '2015-07-28', '78901234567'),
+('3', '5', '2012', '6793', '2015-03-18', '34567890124'),
+('46', '6', '2009', '8238', '2015-06-01', '01234567890'),
+('37', '1', '2012', '22268', '2015-12-04', '09876543213'),
+('30', '5', '2012', '19313', '2015-10-14', '23456789014'),
+('16', '5', '2014', '3047', '2015-01-06', '01234567893'),
+('3', '5', '2013', '5213', '2015-06-20', '09876543214'),
+('18', '5', '2014', '1059', '2015-12-14', '01234567890'),
+('29', '6', '2013', '12112', '2015-06-24', '12345678904'),
+('18', '5', '2013', '16354', '2015-06-21', '56789012347'),
+('38', '2', '2014', '7166', '2015-02-06', '78901234570'),
+('33', '1', '2010', '9781', '2015-10-19', '67890123459'),
+('30', '5', '2013', '29978', '2015-04-23', '01234567890'),
+('12', '4', '2010', '10219', '2015-08-17', '45678901237'),
+('45', '5', '2012', '18067', '2015-09-01', '01234567891'),
+('27', '4', '2012', '17560', '2015-07-04', '90123456782'),
+('6', '5', '2009', '9733', '2015-01-07', '01234567892'),
+('39', '2', '2011', '15324', '2015-08-18', '34567890124'),
+('39', '2', '2011', '18174', '2015-12-19', '90123456782'),
+('47', '2', '2009', '4565', '2015-01-06', '89012345680'),
+('54', '2', '2012', '24156', '2015-05-24', '67890123456'),
+('34', '4', '2011', '13425', '2015-09-08', '12345678903'),
+('52', '4', '2011', '2917', '2015-10-10', '34567890124'),
+('31', '4', '2009', '9056', '2015-12-08', '12345678903'),
+('51', '6', '2011', '5904', '2015-04-26', '34567890126'),
+('33', '1', '2013', '13958', '2015-09-13', '12345678904'),
+('46', '6', '2013', '11545', '2015-03-26', '89012345680'),
+('27', '4', '2009', '3534', '2015-04-09', '12345678904'),
+('49', '2', '2010', '8043', '2015-07-07', '89012345678'),
+('16', '2', '2013', '16485', '2015-01-26', '89012345681'),
+('55', '6', '2014', '3880', '2015-06-24', '45678901235'),
+('45', '6', '2010', '28801', '2015-04-29', '89012345680'),
+('47', '2', '2009', '5547', '2015-09-07', '12345678903'),
+('12', '6', '2012', '31853', '2015-11-16', '90123456780'),
+('13', '5', '2009', '12688', '2015-09-04', '12345678905'),
+('5', '6', '2013', '17281', '2015-08-19', '45678901237'),
+('35', '3', '2013', '7576', '2015-12-13', '45678901237'),
+('13', '5', '2011', '16350', '2015-08-20', '09876543213'),
+('39', '2', '2014', '31539', '2015-10-28', '34567890126'),
+('41', '2', '2013', '3497', '2015-04-11', '12345678902'),
+('27', '4', '2009', '3195', '2015-09-03', '12345678902'),
+('26', '5', '2009', '1501', '2015-01-17', '90123456781'),
+('10', '2', '2010', '11449', '2015-12-20', '12345678902'),
+('9', '5', '2013', '3504', '2015-11-15', '12345678902'),
+('11', '4', '2014', '16888', '2015-11-26', '89012345679'),
+('27', '4', '2012', '11160', '2015-05-04', '34567890124'),
+('26', '6', '2010', '1764', '2015-04-05', '78901234569'),
+('49', '2', '2011', '13871', '2015-09-06', '78901234570'),
+('28', '2', '2009', '21609', '2015-09-18', '45678901237'),
+('23', '2', '2014', '16780', '2015-04-29', '09876543210'),
+('28', '1', '2010', '4588', '2015-07-29', '67890123459'),
+('37', '1', '2013', '43229', '2015-08-11', '78901234568'),
+('25', '4', '2013', '4976', '2015-01-07', '01234567894'),
+('33', '1', '2010', '5878', '2015-04-15', '23456789013'),
+('26', '2', '2012', '13515', '2015-08-02', '01234567890'),
+('49', '2', '2012', '4272', '2015-09-23', '78901234567'),
+('53', '1', '2010', '14588', '2015-05-27', '23456789012'),
+('26', '4', '2014', '12072', '2015-09-18', '09876543213'),
+('49', '6', '2014', '10878', '2015-08-17', '01234567892'),
+('41', '2', '2011', '4822', '2015-01-07', '09876543213'),
+('45', '5', '2011', '17582', '2015-07-28', '67890123459'),
+('16', '6', '2013', '9457', '2015-11-30', '78901234569'),
+('56', '2', '2013', '7676', '2015-05-24', '01234567894'),
+('52', '5', '2009', '17212', '2015-01-14', '09876543213'),
+('31', '2', '2010', '8911', '2015-11-06', '34567890123'),
+('8', '2', '2010', '15189', '2015-05-01', '34567890124'),
+('15', '2', '2014', '17375', '2015-05-24', '12345678902'),
+('12', '4', '2013', '14906', '2015-03-24', '09876543212'),
+('45', '6', '2010', '8261', '2015-12-14', '90123456789'),
+('50', '6', '2010', '17835', '2015-10-17', '90123456781'),
+('18', '2', '2010', '5512', '2015-05-05', '56789012348'),
+('56', '2', '2009', '8779', '2015-10-02', '89012345678'),
+('34', '4', '2010', '12642', '2015-06-28', '34567890125'),
+('23', '2', '2013', '28660', '2015-12-19', '23456789012'),
+('16', '2', '2014', '2286', '2015-01-14', '67890123457'),
+('13', '6', '2013', '9689', '2015-01-30', '89012345681'),
+('29', '6', '2009', '21921', '2015-04-17', '01234567893'),
+('30', '5', '2012', '15343', '2015-05-06', '78901234568'),
+('8', '2', '2013', '1105', '2015-07-22', '67890123458'),
+('5', '5', '2010', '23186', '2015-08-08', '23456789015'),
+('50', '6', '2010', '25784', '2015-01-05', '09876543214'),
+('55', '6', '2012', '3073', '2015-05-15', '45678901236'),
+('37', '2', '2011', '36508', '2015-01-18', '78901234570'),
+('18', '5', '2014', '664', '2015-03-21', '23456789013'),
+('31', '4', '2012', '5978', '2015-11-11', '89012345681'),
+('37', '2', '2010', '7715', '2015-06-29', '34567890123'),
+('5', '6', '2014', '2581', '2015-06-28', '34567890125'),
+('13', '5', '2009', '9134', '2015-03-24', '34567890124'),
+('49', '4', '2009', '7457', '2015-06-09', '09876543211'),
+('43', '1', '2014', '41325', '2015-10-26', '34567890124'),
+('54', '2', '2011', '21385', '2015-10-26', '01234567892'),
+('48', '5', '2013', '22476', '2015-06-27', '01234567891'),
+('16', '5', '2014', '1890', '2015-09-15', '09876543212'),
+('35', '6', '2013', '25490', '2015-11-05', '34567890126'),
+('53', '5', '2011', '3650', '2015-07-01', '45678901236'),
+('12', '1', '2011', '15730', '2015-11-13', '90123456780'),
+('37', '2', '2013', '1653', '2015-03-08', '56789012345'),
+('5', '4', '2009', '12227', '2015-10-17', '45678901235'),
+('31', '2', '2014', '18756', '2015-07-14', '90123456780'),
+('33', '1', '2013', '7526', '2015-09-20', '12345678903'),
+('39', '6', '2012', '1697', '2015-10-25', '12345678901'),
+('29', '6', '2009', '25245', '2015-10-17', '09876543213'),
+('38', '2', '2010', '24598', '2015-06-28', '12345678901'),
+('34', '2', '2012', '9473', '2015-02-06', '45678901235'),
+('49', '4', '2012', '6544', '2015-04-13', '01234567891'),
+('15', '2', '2013', '38326', '2015-10-24', '78901234570'),
+('26', '2', '2010', '11491', '2015-08-26', '23456789012'),
+('41', '2', '2009', '2618', '2015-12-04', '78901234568'),
+('5', '6', '2012', '8976', '2015-11-06', '45678901237'),
+('7', '4', '2009', '13958', '2015-07-22', '45678901235'),
+('26', '6', '2013', '10425', '2015-12-13', '23456789015'),
+('49', '2', '2012', '8951', '2015-02-28', '01234567894'),
+('33', '6', '2010', '8114', '2015-05-14', '45678901235'),
+('28', '2', '2011', '16268', '2015-04-26', '67890123457'),
+('3', '6', '2010', '1769', '2015-06-09', '45678901234'),
+('12', '1', '2012', '19958', '2015-08-10', '12345678901'),
+('5', '5', '2010', '7654', '2015-07-01', '78901234567'),
+('12', '2', '2013', '17288', '2015-03-24', '09876543214'),
+('13', '6', '2012', '2916', '2015-08-14', '12345678905'),
+('55', '6', '2012', '6344', '2015-04-26', '09876543210'),
+('47', '6', '2011', '426', '2015-12-16', '67890123458'),
+('52', '5', '2011', '30147', '2015-03-08', '23456789014'),
+('12', '4', '2010', '7441', '2015-01-17', '09876543213'),
+('18', '2', '2011', '10544', '2015-12-06', '12345678901'),
+('34', '4', '2011', '9199', '2015-06-20', '45678901236'),
+('47', '2', '2009', '4138', '2015-09-07', '01234567894'),
+('11', '4', '2010', '32037', '2015-07-28', '89012345678'),
+('30', '5', '2013', '17652', '2015-12-10', '09876543213'),
+('49', '4', '2012', '3673', '2015-08-26', '90123456781'),
+('13', '6', '2012', '4834', '2015-04-11', '78901234568'),
+('29', '6', '2009', '16188', '2015-08-17', '67890123456'),
+('7', '4', '2009', '12156', '2015-06-29', '67890123458'),
+('34', '4', '2009', '14096', '2015-12-02', '01234567891'),
+('50', '6', '2013', '1978', '2015-11-05', '12345678901'),
+('13', '2', '2013', '2276', '2015-09-24', '01234567893'),
+('28', '2', '2011', '22324', '2015-09-25', '09876543213'),
+('37', '1', '2013', '26331', '2015-06-03', '78901234570'),
+('26', '5', '2010', '4754', '2015-11-28', '89012345679'),
+('14', '6', '2014', '13896', '2015-05-01', '23456789015'),
+('9', '5', '2013', '4800', '2015-09-18', '67890123459'),
+('18', '5', '2012', '25554', '2015-09-20', '23456789015'),
+('17', '6', '2012', '26632', '2015-10-24', '09876543214'),
+('34', '4', '2009', '9544', '2015-08-09', '23456789013'),
+('12', '6', '2013', '11308', '2015-06-19', '12345678904'),
+('26', '6', '2013', '9266', '2015-09-25', '90123456781'),
+('10', '2', '2011', '12317', '2015-01-14', '12345678902'),
+('37', '2', '2010', '5294', '2015-01-14', '09876543212'),
+('26', '6', '2010', '3102', '2015-10-10', '34567890124'),
+('36', '3', '2014', '7137', '2015-08-21', '78901234570'),
+('19', '1', '2014', '26444', '2015-04-06', '01234567892'),
+('12', '4', '2013', '14127', '2015-08-21', '01234567891'),
+('3', '6', '2012', '8430', '2015-03-08', '09876543214'),
+('56', '2', '2012', '17242', '2015-11-25', '90123456780'),
+('28', '2', '2011', '9912', '2015-10-29', '78901234568'),
+('7', '6', '2013', '7242', '2015-09-25', '78901234567'),
+('49', '2', '2012', '8249', '2015-05-11', '12345678904'),
+('11', '6', '2010', '708', '2015-10-29', '09876543214'),
+('30', '3', '2011', '8492', '2015-05-13', '45678901236'),
+('48', '5', '2013', '20539', '2015-07-25', '67890123456'),
+('42', '1', '2012', '9959', '2015-06-03', '01234567892'),
+('10', '2', '2011', '10379', '2015-12-30', '12345678903'),
+('46', '6', '2013', '8363', '2015-04-05', '01234567893'),
+('11', '1', '2011', '12548', '2015-02-13', '01234567890'),
+('45', '6', '2010', '18722', '2015-01-18', '56789012345'),
+('11', '1', '2011', '8526', '2015-03-11', '23456789016'),
+('37', '2', '2011', '11674', '2015-08-24', '01234567892'),
+('18', '2', '2010', '4073', '2015-05-04', '90123456789'),
+('26', '4', '2013', '2255', '2015-08-03', '89012345678'),
+('9', '5', '2013', '1956', '2015-03-26', '09876543214'),
+('5', '5', '2010', '14861', '2015-12-11', '78901234567'),
+('16', '6', '2014', '15159', '2015-08-05', '09876543211'),
+('44', '6', '2013', '927', '2015-12-16', '09876543210'),
+('5', '6', '2014', '2920', '2015-09-04', '90123456782'),
+('5', '1', '2009', '20976', '2015-11-05', '01234567894'),
+('13', '2', '2013', '3724', '2015-03-11', '89012345678'),
+('6', '5', '2009', '4515', '2015-07-07', '09876543211'),
+('29', '6', '2013', '13216', '2015-07-22', '01234567891'),
+('11', '4', '2010', '8904', '2015-12-13', '89012345679'),
+('5', '6', '2014', '1918', '2015-12-04', '23456789012'),
+('37', '1', '2014', '4729', '2015-11-24', '89012345681'),
+('27', '4', '2009', '1609', '2015-08-10', '01234567891'),
+('51', '5', '2010', '6520', '2015-08-11', '56789012345'),
+('14', '6', '2012', '1818', '2015-08-24', '34567890123'),
+('28', '2', '2009', '10109', '2015-06-24', '23456789016'),
+('12', '4', '2010', '3456', '2015-02-26', '01234567891'),
+('33', '1', '2010', '3866', '2015-09-03', '67890123456'),
+('14', '6', '2011', '16819', '2015-05-22', '90123456781'),
+('16', '6', '2014', '26645', '2015-04-23', '78901234570'),
+('31', '2', '2010', '6602', '2015-09-18', '34567890126'),
+('26', '5', '2010', '1587', '2015-06-03', '09876543212'),
+('34', '3', '2012', '36794', '2015-09-12', '56789012348'),
+('30', '5', '2013', '16752', '2015-03-18', '23456789014'),
+('18', '2', '2010', '1248', '2015-03-18', '90123456781'),
+('49', '4', '2011', '10479', '2015-05-13', '56789012347'),
+('42', '1', '2009', '4375', '2015-12-04', '34567890125'),
+('29', '6', '2009', '4519', '2015-05-14', '01234567891'),
+('11', '4', '2010', '11298', '2015-10-25', '45678901235'),
+('47', '6', '2011', '296', '2015-09-25', '01234567892'),
+('28', '1', '2009', '15164', '2015-07-01', '23456789016'),
+('53', '4', '2012', '8126', '2015-12-02', '12345678901'),
+('28', '2', '2014', '9426', '2015-04-17', '90123456781'),
+('9', '5', '2009', '6040', '2015-01-16', '89012345680'),
+('56', '5', '2013', '15508', '2015-06-01', '12345678904'),
+('5', '4', '2014', '22804', '2015-07-11', '67890123456'),
+('12', '4', '2009', '18063', '2015-10-13', '89012345681'),
+('29', '6', '2011', '8986', '2015-08-19', '34567890124'),
+('7', '6', '2011', '6443', '2015-01-07', '01234567891'),
+('3', '6', '2014', '658', '2015-07-04', '12345678903'),
+('45', '5', '2012', '8484', '2015-06-21', '78901234570'),
+('12', '1', '2013', '17027', '2015-01-29', '34567890124'),
+('34', '3', '2010', '6383', '2015-12-06', '56789012345'),
+('47', '4', '2012', '20179', '2015-02-28', '34567890126'),
+('11', '1', '2011', '13315', '2015-10-26', '67890123457'),
+('29', '6', '2013', '10576', '2015-03-24', '34567890123'),
+('41', '2', '2013', '7436', '2015-10-17', '67890123456'),
+('49', '2', '2010', '1946', '2015-08-11', '09876543210'),
+('16', '6', '2013', '3305', '2015-07-22', '90123456780'),
+('5', '6', '2014', '1149', '2015-08-26', '45678901235'),
+('17', '5', '2010', '18164', '2015-08-18', '89012345679'),
+('33', '5', '2010', '21990', '2015-07-11', '78901234569'),
+('3', '5', '2013', '6324', '2015-12-14', '34567890124'),
+('39', '6', '2012', '1562', '2015-09-21', '34567890127'),
+('7', '4', '2014', '30711', '2015-02-13', '23456789012'),
+('34', '2', '2012', '10751', '2015-08-26', '12345678904'),
+('39', '6', '2013', '21350', '2015-02-06', '23456789015'),
+('15', '2', '2012', '10878', '2015-02-28', '09876543210'),
+('54', '2', '2010', '1244', '2015-12-10', '45678901237'),
+('49', '4', '2012', '2479', '2015-07-25', '89012345678'),
+('33', '6', '2012', '5636', '2015-04-12', '89012345681'),
+('47', '2', '2009', '1910', '2015-05-05', '01234567893'),
+('47', '6', '2009', '49919', '2015-04-23', '56789012348'),
+('13', '6', '2009', '9735', '2015-11-16', '89012345681'),
+('28', '1', '2009', '9781', '2015-01-29', '01234567893'),
+('11', '1', '2012', '15465', '2015-11-11', '56789012348'),
+('50', '6', '2010', '20612', '2015-07-20', '89012345679'),
+('27', '4', '2012', '9486', '2015-10-28', '56789012346'),
+('30', '3', '2010', '3038', '2015-08-21', '09876543213'),
+('10', '3', '2010', '23529', '2015-03-11', '90123456782'),
+('49', '5', '2010', '2736', '2015-10-29', '09876543213'),
+('3', '5', '2013', '3155', '2015-09-20', '67890123459'),
+('53', '1', '2011', '820', '2015-01-07', '67890123456'),
+('34', '2', '2013', '10448', '2015-05-31', '90123456782'),
+('51', '6', '2011', '8397', '2015-06-19', '34567890125'),
+('49', '6', '2013', '16350', '2015-02-04', '01234567893'),
+('12', '2', '2011', '27480', '2015-08-08', '34567890124'),
+('47', '4', '2014', '13194', '2015-04-15', '78901234570'),
+('7', '4', '2014', '22346', '2015-04-30', '90123456780'),
+('12', '6', '2012', '11182', '2015-09-07', '56789012346'),
+('14', '6', '2014', '18826', '2015-02-04', '56789012345'),
+('26', '5', '2010', '2098', '2015-04-05', '01234567890'),
+('13', '5', '2010', '9314', '2015-03-24', '09876543213');
+
+INSERT INTO vendita(idv, idc, anno, bottiglie, datav, piva) VALUES
+('33', '5', '2010', '28472', '2015-08-11', '12345678901'),
+('12', '6', '2009', '6985', '2015-12-13', '90123456782'),
+('26', '6', '2011', '21520', '2015-05-31', '45678901234'),
+('17', '6', '2012', '11424', '2015-10-17', '90123456782'),
+('35', '6', '2014', '2527', '2015-08-26', '67890123458'),
+('26', '4', '2013', '1788', '2015-04-26', '67890123456'),
+('11', '4', '2010', '12492', '2015-10-07', '34567890123'),
+('37', '2', '2010', '4216', '2015-10-02', '45678901237'),
+('23', '2', '2014', '10515', '2015-08-16', '09876543213'),
+('31', '4', '2009', '2660', '2015-01-11', '09876543211'),
+('16', '6', '2013', '4732', '2015-07-22', '34567890127'),
+('18', '2', '2010', '1517', '2015-10-24', '12345678904'),
+('6', '6', '2014', '6711', '2015-10-30', '89012345678'),
+('47', '6', '2011', '393', '2015-11-28', '12345678901'),
+('31', '2', '2014', '11391', '2015-09-07', '45678901236'),
+('10', '2', '2010', '11909', '2015-02-04', '78901234570'),
+('51', '6', '2012', '16517', '2015-04-23', '56789012345'),
+('56', '5', '2013', '11153', '2015-01-29', '09876543212'),
+('6', '6', '2011', '30630', '2015-06-27', '23456789012'),
+('49', '6', '2013', '8077', '2015-01-06', '09876543211'),
+('3', '5', '2014', '9584', '2015-10-29', '90123456789'),
+('49', '2', '2011', '21091', '2015-04-23', '34567890124'),
+('13', '5', '2010', '21515', '2015-02-11', '45678901236'),
+('39', '2', '2014', '9939', '2015-09-18', '34567890124'),
+('26', '5', '2010', '2024', '2015-05-11', '89012345680'),
+('16', '2', '2014', '1802', '2015-01-16', '67890123456'),
+('51', '6', '2010', '4426', '2015-01-26', '90123456789'),
+('54', '2', '2012', '9610', '2015-01-06', '90123456781'),
+('10', '2', '2011', '7860', '2015-08-18', '09876543211'),
+('35', '3', '2011', '12872', '2015-09-15', '89012345679'),
+('13', '5', '2010', '15007', '2015-09-13', '56789012345'),
+('51', '5', '2010', '5189', '2015-05-03', '34567890126'),
+('3', '5', '2012', '5677', '2015-09-24', '45678901234'),
+('9', '5', '2009', '4827', '2015-01-18', '89012345679'),
+('26', '6', '2011', '12951', '2015-06-01', '34567890126'),
+('39', '6', '2011', '12668', '2015-08-11', '78901234570'),
+('23', '2', '2014', '7411', '2015-08-14', '89012345679'),
+('18', '5', '2012', '6839', '2015-06-19', '09876543212'),
+('43', '5', '2012', '17185', '2015-08-16', '67890123459'),
+('11', '6', '2009', '17529', '2015-06-01', '34567890123'),
+('34', '2', '2013', '8622', '2015-04-13', '23456789013'),
+('53', '5', '2013', '26372', '2015-06-20', '89012345678'),
+('10', '3', '2010', '14930', '2015-03-08', '12345678905'),
+('3', '6', '2014', '1121', '2015-09-18', '90123456781'),
+('26', '6', '2013', '8932', '2015-12-27', '12345678901'),
+('56', '2', '2012', '3556', '2015-11-26', '09876543210'),
+('33', '6', '2010', '3219', '2015-12-04', '09876543212'),
+('18', '2', '2010', '1846', '2015-12-26', '78901234570'),
+('16', '6', '2009', '12240', '2015-01-18', '09876543213'),
+('27', '4', '2010', '30931', '2015-09-20', '09876543212'),
+('51', '6', '2011', '6931', '2015-12-14', '09876543212'),
+('33', '6', '2011', '1562', '2015-03-21', '12345678902'),
+('33', '6', '2011', '317', '2015-07-25', '12345678903'),
+('12', '1', '2013', '6840', '2015-02-20', '45678901237'),
+('18', '2', '2011', '12767', '2015-12-16', '67890123458'),
+('34', '4', '2011', '14459', '2015-09-01', '12345678902'),
+('50', '6', '2014', '12884', '2015-05-27', '78901234567'),
+('33', '5', '2010', '12020', '2015-11-24', '09876543212'),
+('55', '6', '2012', '6044', '2015-12-02', '23456789016'),
+('52', '5', '2009', '9176', '2015-04-06', '45678901234'),
+('5', '6', '2013', '22206', '2015-10-10', '01234567894'),
+('48', '5', '2012', '13312', '2015-10-29', '67890123458'),
+('38', '2', '2010', '15058', '2015-07-22', '01234567893'),
+('39', '2', '2012', '15364', '2015-09-20', '12345678903'),
+('51', '6', '2012', '22914', '2015-04-11', '67890123456'),
+('5', '1', '2014', '22920', '2015-04-09', '56789012346'),
+('5', '6', '2012', '5599', '2015-05-24', '01234567892'),
+('11', '1', '2011', '4833', '2015-01-05', '90123456781'),
+('18', '2', '2011', '12885', '2015-11-04', '09876543212'),
+('13', '6', '2009', '10829', '2015-07-28', '78901234570'),
+('44', '6', '2012', '1240', '2015-12-06', '23456789013'),
+('34', '3', '2010', '4913', '2015-06-09', '12345678902'),
+('46', '6', '2011', '14374', '2015-10-07', '34567890124'),
+('31', '2', '2010', '4479', '2015-02-12', '56789012345'),
+('56', '2', '2012', '7270', '2015-09-07', '45678901235'),
+('26', '4', '2010', '6421', '2015-09-12', '78901234569'),
+('43', '1', '2013', '5372', '2015-12-03', '34567890124'),
+('12', '6', '2009', '4845', '2015-12-22', '09876543211'),
+('7', '6', '2011', '10244', '2015-10-17', '12345678904'),
+('56', '5', '2009', '3682', '2015-09-21', '09876543214'),
+('48', '5', '2013', '35758', '2015-01-09', '67890123458'),
+('13', '6', '2009', '8588', '2015-09-01', '23456789013'),
+('34', '3', '2012', '10585', '2015-01-17', '67890123456'),
+('28', '2', '2009', '8747', '2015-12-27', '90123456781'),
+('26', '5', '2009', '1330', '2015-03-24', '90123456782'),
+('5', '4', '2014', '22317', '2015-04-06', '90123456789'),
+('5', '6', '2013', '15466', '2015-02-11', '89012345679'),
+('51', '6', '2011', '2292', '2015-10-29', '78901234568'),
+('16', '2', '2013', '11496', '2015-12-16', '67890123457'),
+('13', '2', '2012', '1469', '2015-12-02', '90123456789'),
+('12', '1', '2011', '4863', '2015-04-13', '67890123457'),
+('47', '6', '2009', '22104', '2015-12-14', '23456789016'),
+('51', '6', '2012', '11191', '2015-12-06', '45678901234'),
+('3', '5', '2014', '5996', '2015-05-13', '89012345681'),
+('29', '6', '2013', '5351', '2015-03-24', '78901234567'),
+('12', '6', '2013', '6273', '2015-10-26', '09876543211'),
+('3', '5', '2013', '4806', '2015-08-14', '89012345680'),
+('53', '1', '2009', '6143', '2015-01-17', '09876543210'),
+('8', '2', '2010', '13096', '2015-05-27', '09876543213');
+
