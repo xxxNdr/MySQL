@@ -67,8 +67,47 @@ and c.nome = 'amministrazione'
 );
 
 -- 3) Visualizzare i ticket che non hanno avuto risposte (nessun messaggio)
+select t.*
+from ticket t
+left join risposta r on t.tid = r.tid
+where r.rid is null;
+
+/* INNER JOIN in SQL restituisce solo le righe che hanno corrispondenza
+in entrambe le tabelle. Un INNER JOIN tra la tabella ticket e la tabella rispsota
+sulla colonna tid mi mostrerebbe le righe dei ticket che hanno avuto almeno una risposta.
+Entra in gioco LEFT OUTER JOIN perché restituisce tutte le righe della tabella di sinistra
+ticket ANCHE SE NON ESISTONO corrispondenze nella tabella di destra risposta.
+I ticket senza risposta saranno le colonne NULL nella tabella rispsota.
+*/
 
 -- 4) Selezionare gli utenti che hanno aperto ticket per la categoria PEC
+
+select u.nome, u.cognome, u.uid
+from utente u
+join ticket t on t.uid_cliente = u.uid
+join categoria c on t.cid = c.cid
+where t.stato = 'aperto'
+and c.nome = 'pec';
+
+select nome, cognome, uid
+from utente
+where uid in (
+	select uid_cliente
+    from ticket
+    where stato = 'aperto'
+	and cid = (
+        select cid
+        from categoria
+        where nome = 'pec'
+	)
+);
+
+/* La query con INNER JOIN restituisce nel mio caso anche utenti che hanno più ticket aperti
+della categoria pec, perché mostra una riga per ogni combinazione corrispondente tra le tabelle
+ticket categoria e utente.
+La query con IN invece mostra ogni utente una sola volta perché filtra quelli che hanno
+ALMENO un ticket aperto nella categoria pec MA NON ripete ogni utente per ogni ticket.
+Alla prima query quindi basta aggiungere DISTINCT per renderla uguale nel risultato alla seconda. */
 
 -- 5) Selezionare i tecnici (ruolo = tecnico) non hanno mai gestito ticket della categoria 'Informazioni'
 
