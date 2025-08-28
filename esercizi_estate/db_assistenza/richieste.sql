@@ -111,7 +111,94 @@ Alla prima query quindi basta aggiungere DISTINCT per renderla uguale nel risult
 
 -- 5) Selezionare i tecnici (ruolo = tecnico) non hanno mai gestito ticket della categoria 'Informazioni'
 
+select nome, cognome, uid
+from utente u
+where not exists (
+select *
+from ticket t, categoria c
+where t.uid_tecnico = u.uid
+and t.cid = c.cid
+and c.nome = 'informazioni'
+);
+
 -- 7) Selezionare i tecnici che hanno risolto solo ticket della categoria 'PEC'
+select nome, cognome, uid
+from utente u
+where exists (
+select *
+from ticket t, categoria c
+where t.uid_tecnico = u.uid
+and t.cid = c.cid
+and c.nome = 'pec'
+);
+/*
+questa query seleziona tutti i tecnici che hanno risolto almeno un ticket della
+ categoria pec, ma non esclude quelli che hanno risolto ticket di altra categoria
+ */
+ 
+
+select nome, cognome, uid
+from utente
+where ruolo = 'tecnico'
+and uid in (
+select uid_tecnico
+from ticket
+where report_chiusura is not null
+and cid = (
+select cid from categoria where nome = 'pec'
+))
+and uid not in (
+select uid_tecnico
+from ticket
+where report_chiusura is not null
+and cid != (
+select cid from categoria where nome = 'pec'
+));
+
+-- la parte con IN seleziona i tecnici che hanno risolto almeno un ticket di tipo pec
+-- la parte con NOT IN esclude i tecnici che hanno risolto ticket di altre categorie
+
+select u.nome, u.cognome, u.uid
+-- seleziono il nome cognome e id utente
+from utente u
+-- dalla tabella utente con alias u
+join ticket t on u.uid = t.uid_tecnico
+-- faccio join con le tabelle ticket e utente dove uid utente corrisponde a uid_tecnico ticket
+join categoria c on t.cid = c.cid
+-- faccio join con le tabelle categoria e ticket dove unisco i ticket alla categoria di appartenenza tramite la colonna cid
+where u.ruolo = 'tecnico'
+-- applico il filtro sul ruolo dell'utente che deve essere 'tecnico'
+and report_chiusura is not null
+-- aggiungo un secondo filtro per cui il report_chiusura non è nullo così sono certo che il ticket è stato chiuso
+and c.nome = 'pec'
+-- aggiungo un altro filtro sul nome della categoria che deve essere 'pec'
+and not exists (
+/*
+il NOT EXISTS verifica che non esistano ticket chiusi da tecnici diversi dalla categoria 'pec'
+grazie alla combinazione con c2.nome != 'pec'
+Restituisce TRUE se la subquery non trova righe; controlla l'assenza di certi dati
+*/
+select *
+-- seleziono tutti i campi
+from ticket t2
+-- dalla tabella ticket con alias t2 per differenziarla da ticket t che è la query padre
+join categoria c2 on t2.cid = c2.cid
+-- faccio il join tra categoria e ticket sulla colonna cid, così conosco la categoria di ciascun ticket
+where t2.uid_tecnico = u.uid
+-- cerco solo il ticket il cui tecnico (uid_tecnico) è uguale all'utente (u.uid) della query principale
+-- la subquery cerca il ticket del tecnico considerato nella query principale 
+and t2.report_chiusura is not null
+-- continuando a cercare solo i report chiusi
+and c2.nome != 'pec')
+-- che NON appartengano alla categoria pec
+group by u.nome, u.cognome, u.uid;
+/*
+Evita duplicati. Più righe della tabella ticket possono corrispondere allo stesso tecnico perciò
+raggruppando per i campi identificativi del tecnico la query restituisce una sola riga
+per tecnico anche se ha più ticket chiusi nella categoria 'pec'
+Tecnica per rendere l'elenco finale univoco e più leggibile
+*/ 
+
 
 -- 8*) Selezionare i tecnici che hanno sempre inviato una risposta in tutti i ticket che hanno chiuso
 
