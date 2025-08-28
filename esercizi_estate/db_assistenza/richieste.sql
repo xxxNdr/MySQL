@@ -202,6 +202,48 @@ Tecnica per rendere l'elenco finale univoco e più leggibile
 
 -- 8*) Selezionare i tecnici che hanno sempre inviato una risposta in tutti i ticket che hanno chiuso
 
+select distinct u.nome, u.cognome, u.uid
+from utente u
+join ticket t on u.uid = t.uid_tecnico
+join risposta r on t.tid = r.tid
+where u.ruolo = 'tecnico'
+and r.messaggio is not null
+and report_chiusura is not null;
+
+select u.nome, u.cognome, u.uid
+from utente u
+join ticket t on u.uid = t.uid_tecnico
+join risposta r on t.tid = r.tid
+where u.ruolo = 'tecnico'
+and r.messaggio is not null
+and report_chiusura is not null
+group by u.nome, u.cognome, u.uid;
+
+/* Queste due query danno lo stesso risultato ma non rispettano la consegna perché:
+- selezionano i tecnici che hanno dato almeno una risposta in qualche ticket chiuso da loro
+NON verifica che abbiano risposto a tutti i ticket chiusi!
+In poche parole basta che un tecnico abbia dato una risposta a un singolo ticket chiuso
+per essere incluso nel risultato.
+L'obbiettivo invece è selezionare SOLO i tecnici che hanno SEMPRE risposto a tutti i loro ticket chiusi
+*/
+
+select u.nome, u.cognome, u.uid
+from utente u
+where u.ruolo = 'tecnico'
+and not exists (
+select *
+from ticket t
+where t.uid_tecnico = u.uid
+and report_chiusura is not null
+and not exists (
+select *
+from risposta r
+where t.tid = r.tid
+and r.uid = u.uid
+-- questo filtro è molto importante per specificare che l'autore del messaggio sia proprio quel tecnico che ha chiuso il ticket
+and r.messaggio is not null
+));
+
 -- 9) Visualizzare il numero di ticket aperti, chiusi e in carico.
 -- Il risultato deve essere visualizzato in un'unica query.
 
