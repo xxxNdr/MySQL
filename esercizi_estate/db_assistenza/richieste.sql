@@ -240,12 +240,41 @@ select *
 from risposta r
 where t.tid = r.tid
 and r.uid = u.uid
--- questo filtro è molto importante per specificare che l'autore del messaggio sia proprio quel tecnico che ha chiuso il ticket
+-- questo filtro è molto importante per specificare che
+-- l'autore del messaggio sia proprio quel tecnico che ha chiuso il ticket
 and r.messaggio is not null
 ));
 
 -- 9) Visualizzare il numero di ticket aperti, chiusi e in carico.
 -- Il risultato deve essere visualizzato in un'unica query.
+
+select stato, count(*) numero
+/*
+count(*) conta il numero totale di righe,
+* significa tutte le righe
+in questo caso conta le righe di ogni gruppo
+*/
+from ticket
+group by stato;
+/*
+la clausola group by divide le righe della tabella per gruppi distinti
+basati sul valore della colonna stato
+*/
+
+select
+sum(case when stato='aperto' then 1 else 0 end) aperti,
+sum(case when stato='chiuso' then 1 else 0 end) chiusi,
+sum(case when stato='in_carico' then 1 else 0 end) in_carico
+from ticket;
+/*
+alternativa alla query precedente
+la struttura cae when then else end
+conta 1 nel caso in cui lo stato corrisponde al valore indicato
+oppure 0 cioè non lo conta
+*/
+
+
+
 
 -- 10) Visualizzare il tempo medio di attesa per la presa in carico di un ticket
 
